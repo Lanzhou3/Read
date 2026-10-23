@@ -46,7 +46,13 @@ class ChapterListFragment : VMBaseFragment<TocViewModel>(R.layout.fragment_chapt
         viewModel.chapterListCallBack = this@ChapterListFragment
         val bbg = bottomBackground
         val btc = requireContext().getPrimaryTextColor(ColorUtils.isColorLight(bbg))
-        llChapterBaseInfo.setBackgroundColor(bbg)
+        chapterGlass.setSurfaceColor(bbg)
+        chapterBackdrop.setBackgroundColor(bbg)
+        chapterGlass.bindBackdrop(chapterBackdrop)
+        chapterGlass.addOnLayoutChangeListener { bar, _, _, _, _, _, _, _, _ ->
+            val padding = bar.height + (24 * resources.displayMetrics.density).toInt()
+            recyclerView.setPadding(recyclerView.paddingLeft, recyclerView.paddingTop, recyclerView.paddingRight, padding)
+        }
         tvCurrentChapterInfo.setTextColor(btc)
         ivChapterTop.setColorFilter(btc, PorterDuff.Mode.SRC_IN)
         ivChapterBottom.setColorFilter(btc, PorterDuff.Mode.SRC_IN)
@@ -55,6 +61,16 @@ class ChapterListFragment : VMBaseFragment<TocViewModel>(R.layout.fragment_chapt
         viewModel.bookData.observe(this@ChapterListFragment) {
             initBook(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.chapterGlass.setRenderingActive(true)
+    }
+
+    override fun onPause() {
+        binding.chapterGlass.setRenderingActive(false)
+        super.onPause()
     }
 
     private fun initRecyclerView() {

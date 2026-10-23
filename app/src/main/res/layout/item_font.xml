@@ -3,25 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="5dp">
-
-    <TextView
-        android:id="@+id/tv_font"
-        android:layout_width="0dp"
+    android:minHeight="88dp"
+    android:layout_marginBottom="10dp"
+    android:padding="16dp"
+    android:gravity="center_vertical">
+    <LinearLayout android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="5dp"
-        android:textColor="@color/primaryText" />
+        android:orientation="vertical">
+        <TextView android:id="@+id/font_name"
+            style="@style/ReadingPanelCaption"
+            android:text="@string/reading_current_font" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_checked"
+        <TextView android:id="@+id/tv_font"
+            style="@style/ReadingPanelText"
+            android:text="@string/reading_font_sample"
+            android:textSize="19sp"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+    <ImageView android:id="@+id/iv_checked"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_check"
-        android:visibility="invisible"
-        app:tint="@color/primaryText" />
-
+        android:importantForAccessibility="no" />
 </LinearLayout>

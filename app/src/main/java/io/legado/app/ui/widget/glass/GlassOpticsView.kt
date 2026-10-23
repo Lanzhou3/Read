@@ -20,6 +20,7 @@ internal class GlassOpticsView(context: Context) : View(context) {
     private val targetLocation = IntArray(2)
     private val surfaceLocation = IntArray(2)
     private var lastGeometry: List<Float>? = null
+    private var lastSnapshotVersion = -1L
     private val preDraw = ViewTreeObserver.OnPreDrawListener {
         updateGeometry()
         true
@@ -38,6 +39,7 @@ internal class GlassOpticsView(context: Context) : View(context) {
         this.strength = strength
         this.tint = tint
         lastGeometry = null
+        lastSnapshotVersion = -1L
         updateGeometry()
         invalidate()
     }
@@ -63,13 +65,19 @@ internal class GlassOpticsView(context: Context) : View(context) {
         val x = (surfaceLocation[0] - targetLocation[0]).toFloat()
         val y = (surfaceLocation[1] - targetLocation[1]).toFloat()
         val geometry = listOf(x, y, width.toFloat(), height.toFloat(), source.width.toFloat(), source.height.toFloat())
-        if (lastGeometry == geometry) return
-        lastGeometry = geometry
-        node.setPosition(0, 0, source.width, source.height)
-        node.translationX = -x
-        node.translationY = -y
-        node.setRenderEffect(GlassLensShader.effect(x, y, width.toFloat(), height.toFloat(), radius,
-            resources.displayMetrics.density, strength))
+        val geometryChanged = lastGeometry != geometry
+        if (!geometryChanged && lastSnapshotVersion == source.snapshotVersion) return
+        if (geometryChanged) {
+            lastGeometry = geometry
+            node.setPosition(0, 0, source.width, source.height)
+            node.translationX = -x
+            node.translationY = -y
+            node.setRenderEffect(GlassLensShader.effect(x, y, width.toFloat(), height.toFloat(), radius,
+                resources.displayMetrics.density, strength))
+        }
+        // The first geometry pass can precede the backdrop's first draw. Re-record when
+        // the backdrop changes, even when the bar stays still, so scroll content stays live.
+        lastSnapshotVersion = source.snapshotVersion
         val recording = node.beginRecording()
         source.drawSnapshot(recording)
         node.endRecording()
@@ -88,6 +96,7 @@ internal class GlassOpticsView(context: Context) : View(context) {
         setRenderingActive(false)
         node.discardDisplayList()
         lastGeometry = null
+        lastSnapshotVersion = -1L
         super.onDetachedFromWindow()
     }
     override fun onWindowVisibilityChanged(visibility: Int) {

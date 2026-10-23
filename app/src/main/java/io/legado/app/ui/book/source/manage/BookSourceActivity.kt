@@ -18,6 +18,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
+import androidx.core.view.isVisible
+import io.legado.app.ui.widget.dialog.ActionSheet
+import androidx.core.widget.doAfterTextChanged
+import io.legado.app.databinding.DialogSourceAddressBinding
 import io.legado.app.R
 import io.legado.app.base.VMBaseActivity
 import io.legado.app.constant.AppLog
@@ -151,8 +155,8 @@ class BookSourceActivity : VMBaseActivity<ActivityBookSourceBinding, BookSourceV
         initLiveDataGroup()
         initSelectActionBar()
         resumeCheckSource()
-        if (!LocalConfig.bookSourcesHelpVersionIsLast) {
-            showHelp("SourceMBookHelp")
+        if (savedInstanceState == null && intent.getBooleanExtra("addSource", false)) {
+            binding.root.post { showAddSourceActions() }
         }
     }
 
@@ -172,6 +176,7 @@ class BookSourceActivity : VMBaseActivity<ActivityBookSourceBinding, BookSourceV
 
     override fun onCompatOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.menu_source_add_actions -> showAddSourceActions()
             R.id.menu_add_book_source -> startActivity<BookSourceEditActivity>()
             R.id.menu_import_qr -> qrResult.launch()
             R.id.menu_group_manage -> showDialogFragment<GroupManageDialog>()
@@ -384,6 +389,19 @@ class BookSourceActivity : VMBaseActivity<ActivityBookSourceBinding, BookSourceV
             ).catch {
                 AppLog.put("书源界面更新书源出错", it)
             }.flowOn(IO).conflate().collect { data ->
+                binding.emptyState.isVisible = data.isEmpty()
+                binding.selectActionBar.isVisible = data.isNotEmpty()
+                if (data.isEmpty()) {
+                    val filtered = !searchKey.isNullOrBlank()
+                    binding.emptyState.render(
+                        if (filtered) R.string.ui_source_filtered_title else R.string.ui_source_empty_title,
+                        if (filtered) R.string.ui_source_filtered_message else R.string.ui_source_empty_message,
+                        if (filtered) R.string.ui_clear_filter else R.string.ui_add_source,
+                        alternative = if (filtered) R.string.ui_add_source else R.string.help,
+                        onPrimary = { if (filtered) searchView.setQuery("", false) else showAddSourceActions() },
+                        onAlternative = { if (filtered) showAddSourceActions() else showHelp("SourceMBookHelp") }
+                    )
+                }
                 adapter.setItems(data, adapter.diffItemCallback, !Debug.isChecking)
                 itemTouchCallback.isCanDrag =
                     sort == BookSourceSort.Default && !groupSourcesByDomain
@@ -583,6 +601,23 @@ class BookSourceActivity : VMBaseActivity<ActivityBookSourceBinding, BookSourceV
         }
     }
 
+    private fun showAddSourceActions() {
+        ActionSheet.show(this, R.string.ui_add_source, listOf(
+            ActionSheet.Action(R.string.import_local, R.string.ui_import_source_local_desc, R.drawable.ic_import) {
+                importDoc.launch { mode = HandleFileContract.FILE; allowExtensions = arrayOf("txt", "json") }
+            },
+            ActionSheet.Action(R.string.import_on_line, R.string.ui_import_source_url_desc, R.drawable.ic_cfg_web) {
+                showImportDialog()
+            },
+            ActionSheet.Action(R.string.import_by_qr_code, R.string.ui_import_source_qr_desc, R.drawable.ic_qr_code) {
+                qrResult.launch()
+            },
+            ActionSheet.Action(R.string.add_book_source, R.string.ui_create_source_desc, R.drawable.ic_add) {
+                startActivity<BookSourceEditActivity>()
+            }
+        ))
+    }
+
     @SuppressLint("InflateParams")
     private fun showImportDialog() {
         val aCache = ACache.get(cacheDir = false)
@@ -590,27 +625,35 @@ class BookSourceActivity : VMBaseActivity<ActivityBookSourceBinding, BookSourceV
             .getAsString(importRecordKey)
             ?.splitNotBlank(",")
             ?.toMutableList() ?: mutableListOf()
-        alert(titleResource = R.string.import_on_line) {
-            val alertBinding = DialogEditTextBinding.inflate(layoutInflater).apply {
-                editView.hint = "url"
-                editView.setFilterValues(cacheUrls)
-                editView.delCallBack = {
-                    cacheUrls.remove(it)
+        val alertBinding = DialogSourceAddressBinding.inflate(layoutInflater).apply {
+            editView.setFilterValues(cacheUrls)
+            editView.delCallBack = {
+                cacheUrls.remove(it)
+                aCache.put(importRecordKey, cacheUrls.joinToString(","))
+            }
+        }
+        alertBinding.sourceInput.boxStrokeColor = io.legado.app.ui.widget.ModernUi.accent(this)
+        alertBinding.editView.setTextColor(io.legado.app.ui.widget.ModernUi.ink(this))
+        alertBinding.editView.doAfterTextChanged { alertBinding.sourceInput.error = null }
+        val content = alertBinding.root
+        val dialog = alert(titleResource = R.string.import_on_line) {
+            customView { content }
+            positiveButton(R.string.ui_source_preview)
+            cancelButton()
+        }
+        dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+            val text = alertBinding.editView.text?.toString()?.trim().orEmpty()
+            if (text.isBlank()) {
+                alertBinding.sourceInput.error = getString(R.string.ui_source_input_required)
+                alertBinding.editView.requestFocus()
+            } else {
+                if (text.isAbsUrl() && !cacheUrls.contains(text)) {
+                    cacheUrls.add(0, text)
                     aCache.put(importRecordKey, cacheUrls.joinToString(","))
                 }
+                dialog.dismiss()
+                showDialogFragment(ImportBookSourceDialog(text))
             }
-            customView { alertBinding.root }
-            okButton {
-                val text = alertBinding.editView.text?.toString()
-                text?.let {
-                    if (it.isAbsUrl() && !cacheUrls.contains(it)) {
-                        cacheUrls.add(0, it)
-                        aCache.put(importRecordKey, cacheUrls.joinToString(","))
-                    }
-                    showDialogFragment(ImportBookSourceDialog(it))
-                }
-            }
-            cancelButton()
         }
     }
 

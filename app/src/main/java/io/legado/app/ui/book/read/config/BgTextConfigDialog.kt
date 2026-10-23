@@ -5,16 +5,14 @@ import android.content.DialogInterface
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.SeekBar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.view.isGone
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import io.legado.app.R
+import io.legado.app.help.BuiltInFonts
 import io.legado.app.base.BaseDialogFragment
 import io.legado.app.constant.AppLog
 import io.legado.app.constant.EventBus
@@ -62,9 +60,9 @@ import io.legado.app.utils.readUri
 import io.legado.app.utils.stackTraceStr
 import io.legado.app.utils.toastOnUi
 import io.legado.app.utils.viewbindingdelegate.viewBinding
-import splitties.init.appCtx
 import java.io.File
 import java.io.FileOutputStream
+import splitties.init.appCtx
 
 class BgTextConfigDialog : BaseDialogFragment(R.layout.dialog_read_bg_text) {
 
@@ -101,16 +99,7 @@ class BgTextConfigDialog : BaseDialogFragment(R.layout.dialog_read_bg_text) {
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.run {
-            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setBackgroundDrawableResource(R.color.background)
-            decorView.setPadding(0, 0, 0, 0)
-            val attr = attributes
-            attr.dimAmount = 0.0f
-            attr.gravity = Gravity.BOTTOM
-            attributes = attr
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
+        ReadingPanelStyle.show(this, 0.76f)
     }
 
     override fun onFragmentCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,7 +120,10 @@ class BgTextConfigDialog : BaseDialogFragment(R.layout.dialog_read_bg_text) {
         val isLight = ColorUtils.isColorLight(bg)
         primaryTextColor = requireContext().getPrimaryTextColor(isLight)
         secondaryTextColor = requireContext().getSecondaryTextColor(isLight)
-        rootView.setBackgroundColor(bg)
+        ReadingPanelStyle.prepare(root) { dismissAllowingStateLoss() }
+        listOf(tvTextColor, tvBgColor, tvRestore, ivEdit, ivImport, ivExport, ivDelete).forEach { ReadingPanelStyle.action(it) }
+        io.legado.app.lib.prefs.ModernPreferenceStyle.bindSwitch(requireContext(), swDarkStatusIcon)
+        io.legado.app.lib.prefs.ModernPreferenceStyle.bindSwitch(requireContext(), swUnderline)
         tvNameTitle.setTextColor(primaryTextColor)
         tvName.setTextColor(secondaryTextColor)
         ivEdit.setColorFilter(secondaryTextColor, PorterDuff.Mode.SRC_IN)
@@ -140,7 +132,7 @@ class BgTextConfigDialog : BaseDialogFragment(R.layout.dialog_read_bg_text) {
         swUnderline.setTextColor(primaryTextColor)
         ivImport.setColorFilter(primaryTextColor, PorterDuff.Mode.SRC_IN)
         ivExport.setColorFilter(primaryTextColor, PorterDuff.Mode.SRC_IN)
-        ivDelete.setColorFilter(primaryTextColor, PorterDuff.Mode.SRC_IN)
+        ivDelete.setColorFilter(0xFFD64925.toInt(), PorterDuff.Mode.SRC_IN)
         tvBgAlpha.setTextColor(primaryTextColor)
         tvBgImage.setTextColor(primaryTextColor)
         swUnderline.isGone = ReadBook.book?.isImage == true
@@ -277,7 +269,7 @@ class BgTextConfigDialog : BaseDialogFragment(R.layout.dialog_read_bg_text) {
             configFile.createFileReplace()
             val config = ReadBookConfig.getExportConfig()
             val fontPath = ReadBookConfig.textFont
-            if (fontPath.isNotEmpty()) {
+            if (fontPath.isNotEmpty() && !BuiltInFonts.contains(fontPath)) {
                 val fontDoc = FileDoc.fromFile(fontPath)
                 val fontName = fontDoc.name
                 val fontInputStream = fontDoc.openInputStream().getOrNull()

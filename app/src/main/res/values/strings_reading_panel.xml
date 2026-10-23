@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="reading_fonts_bundled">Built-in fonts</string>
+    <string name="reading_fonts_system">System fonts</string>
+    <string name="reading_font_wenkai">LXGW WenKai</string>
+    <string name="reading_font_license">Open font license</string>
+    <!-- New reading controls use English fallback outside the existing Chinese translation. -->
+    <string name="reading_appearance">Reading appearance</string>
+    <string name="reading_tab_type">Typography</string>
+    <string name="reading_tab_page">Page</string>
+    <string name="reading_tab_theme">Themes</string>
+    <string name="reading_done">Done</string>
+    <string name="reading_current_font">Reading font</string>
+    <string name="reading_font_hint">System fonts or your own font files</string>
+    <string name="reading_margins">Page margins</string>
+    <string name="reading_margins_hint">Adjust body, header and footer separately</string>
+    <string name="reading_info">Titles and page information</string>
+    <string name="reading_info_hint">Chapter titles, progress and page details</string>
+    <string name="reading_theme_hint">Tap to apply · Touch and hold to customize</string>
+    <string name="reading_shared_hint">Use the same typography across themes</string>
+    <string name="reading_margin_preview">Margin guide · Changes apply to the page immediately</string>
+    <string name="reading_fonts_local">Imported fonts</string>
+    <string name="reading_font_import">Import font</string>
+    <string name="reading_font_empty">No custom fonts yet. Import a folder containing TTF or OTF files.</string>
+    <string name="reading_font_sample">A quiet moment · Aa 123.</string>
+    <string name="reading_font_default">System default</string>
+</resources>

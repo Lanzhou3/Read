@@ -420,8 +420,16 @@ class ReadBookActivity : BaseReadBookActivity(),
         val menu = menu ?: return
         val book = ReadBook.book ?: return
         val onLine = !book.isLocal
-        for (i in 0 until menu.size) {
-            val item = menu[i]
+        val items = ArrayList<MenuItem>()
+        fun collect(menu: Menu) {
+            for (i in 0 until menu.size) {
+                val item = menu[i]
+                items.add(item)
+                item.subMenu?.let(::collect)
+            }
+        }
+        collect(menu)
+        for (item in items) {
             when (item.groupId) {
                 R.id.menu_group_on_line -> item.isVisible = onLine
                 R.id.menu_group_local -> item.isVisible = !onLine
@@ -455,6 +463,9 @@ class ReadBookActivity : BaseReadBookActivity(),
      */
     override fun onCompatOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.menu_read_aloud_options -> {
+                binding.readMenu.runMenuOut { showReadAloudDialog() }
+            }
             R.id.menu_change_source,
             R.id.menu_book_change_source -> {
                 binding.readMenu.runMenuOut()

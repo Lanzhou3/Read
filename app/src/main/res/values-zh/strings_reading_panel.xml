@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reading_fonts_bundled">内置字体</string>
+    <string name="reading_fonts_system">系统字体</string>
+    <string name="reading_font_wenkai">霞鹜文楷</string>
+    <string name="reading_font_license">开源授权</string>
+    <string name="reading_appearance">阅读外观</string>
+    <string name="reading_tab_type">字体排版</string>
+    <string name="reading_tab_page">页面布局</string>
+    <string name="reading_tab_theme">主题背景</string>
+    <string name="reading_done">完成</string>
+    <string name="reading_current_font">阅读字体</string>
+    <string name="reading_font_hint">选择系统字体，或导入喜欢的字体</string>
+    <string name="reading_margins">页面边距</string>
+    <string name="reading_margins_hint">分别调整正文、页眉与页脚的留白</string>
+    <string name="reading_info">标题与页码信息</string>
+    <string name="reading_info_hint">设置章节标题、阅读进度和页面信息</string>
+    <string name="reading_theme_hint">轻点切换背景 · 长按自定义颜色与图片</string>
+    <string name="reading_shared_hint">不同背景沿用同一套字体与排版</string>
+    <string name="reading_margin_preview">留白示意 · 调整后立即应用到阅读页面</string>
+    <string name="reading_fonts_local">导入的字体</string>
+    <string name="reading_font_import">导入字体</string>
+    <string name="reading_font_empty">还没有自定义字体，导入含 TTF 或 OTF 文件的文件夹即可。</string>
+    <string name="reading_font_sample">阅见好时光 · Aa 123</string>
+    <string name="reading_font_default">系统默认</string>
+</resources>

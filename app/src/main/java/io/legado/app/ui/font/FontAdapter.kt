@@ -8,6 +8,7 @@ import io.legado.app.base.adapter.ItemViewHolder
 import io.legado.app.base.adapter.RecyclerAdapter
 import io.legado.app.constant.AppLog
 import io.legado.app.databinding.ItemFontBinding
+import io.legado.app.ui.book.read.config.ReadingPanelStyle
 import io.legado.app.utils.*
 import java.io.File
 import java.net.URLDecoder
@@ -48,7 +49,11 @@ class FontAdapter(context: Context, curFilePath: String, val callBack: CallBack)
                 it.printOnDebug()
                 AppLog.put("读取字体 ${item.name} 出错\n${it.localizedMessage}", it, true)
             }
-            tvFont.text = item.name
+            fontName.text = item.name
+            ReadingPanelStyle.action(root, item.name == curName)
+            fontName.setTextColor(ReadingPanelStyle.ink(context))
+            tvFont.setTextColor(ReadingPanelStyle.ink(context))
+            ivChecked.setColorFilter(ReadingPanelStyle.accent(context))
             root.setOnClickListener { callBack.onFontSelect(item) }
             if (item.name == curName) {
                 ivChecked.visible()

@@ -9,6 +9,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import androidx.core.os.postDelayed
+import io.legado.app.help.BuiltInFonts
 import io.legado.app.constant.AppLog
 import io.legado.app.constant.AppPattern
 import io.legado.app.constant.EventBus
@@ -884,6 +885,9 @@ object ChapterProvider {
     private fun getTypeface(fontPath: String): Typeface? {
         return kotlin.runCatching {
             when {
+                BuiltInFonts.contains(fontPath) ->
+                    BuiltInFonts.typeface(fontPath)
+
                 fontPath.isContentScheme() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
                     appCtx.contentResolver
                         .openFileDescriptor(Uri.parse(fontPath), "r")!!

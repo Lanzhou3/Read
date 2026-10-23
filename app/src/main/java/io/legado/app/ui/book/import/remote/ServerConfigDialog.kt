@@ -2,6 +2,10 @@ package io.legado.app.ui.book.import.remote
 
 import android.os.Bundle
 import android.text.InputType
+import android.graphics.Typeface
+import android.graphics.Color
+import io.legado.app.ui.widget.ModernUi
+import io.legado.app.utils.toastOnUi
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +17,7 @@ import io.legado.app.data.entities.Server
 import io.legado.app.data.entities.rule.RowUi
 import io.legado.app.databinding.DialogWebdavServerBinding
 import io.legado.app.databinding.ItemSourceEditBinding
-import io.legado.app.lib.theme.primaryColor
+import io.legado.app.lib.theme.bottomBackground
 import io.legado.app.utils.GSON
 import io.legado.app.utils.applyTint
 import io.legado.app.utils.setLayout
@@ -44,7 +48,9 @@ class ServerConfigDialog() : BaseDialogFragment(R.layout.dialog_webdav_server, t
     }
 
     override fun onFragmentCreated(view: View, savedInstanceState: Bundle?) {
-        binding.toolBar.setBackgroundColor(primaryColor)
+        binding.vwBg.background = ModernUi.shape(requireContext(), requireContext().bottomBackground, 28)
+        binding.toolBar.setBackgroundColor(Color.TRANSPARENT)
+        binding.toolBar.setTitleTextColor(ModernUi.ink(requireContext()))
         binding.toolBar.inflateMenu(R.menu.server_config)
         binding.toolBar.menu.applyTint(requireContext())
         binding.toolBar.setOnMenuItemClickListener(this)
@@ -56,6 +62,10 @@ class ServerConfigDialog() : BaseDialogFragment(R.layout.dialog_webdav_server, t
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_save -> getServer().let {
+                if (it.getConfigJsonObject()?.optString("url").isNullOrBlank()) {
+                    toastOnUi(getString(R.string.ui_server_address_required))
+                    return true
+                }
                 viewModel.save(it) {
                     dismissAllowingStateLoss()
                 }
@@ -86,7 +96,14 @@ class ServerConfigDialog() : BaseDialogFragment(R.layout.dialog_webdav_server, t
                 ).let {
                     binding.flexbox.addView(it.root)
                     it.root.id = index + 1000
-                    it.textInputLayout.hint = rowUi.name
+                    it.textInputLayout.hint = getString(when (rowUi.name) {
+                        "url" -> R.string.ui_server_address
+                        "username" -> R.string.ui_server_account
+                        else -> R.string.ui_server_password
+                    })
+                    it.editText.minHeight = ModernUi.dp(requireContext(), 56)
+                    it.editText.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+                    it.editText.setSingleLine(true)
                     it.editText.setText(config?.getString(rowUi.name))
                 }
                 RowUi.Type.password -> ItemSourceEditBinding.inflate(
@@ -96,7 +113,14 @@ class ServerConfigDialog() : BaseDialogFragment(R.layout.dialog_webdav_server, t
                 ).let {
                     binding.flexbox.addView(it.root)
                     it.root.id = index + 1000
-                    it.textInputLayout.hint = rowUi.name
+                    it.textInputLayout.hint = getString(when (rowUi.name) {
+                        "url" -> R.string.ui_server_address
+                        "username" -> R.string.ui_server_account
+                        else -> R.string.ui_server_password
+                    })
+                    it.editText.minHeight = ModernUi.dp(requireContext(), 56)
+                    it.editText.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+                    it.editText.setSingleLine(true)
                     it.editText.inputType =
                         InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
                     it.editText.setText(config?.getString(rowUi.name))

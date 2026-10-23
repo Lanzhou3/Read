@@ -26,9 +26,10 @@ class NameListPreference(context: Context, attrs: AttributeSet) : ListPreference
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         val v = Preference.bindView<TextView>(
             context, holder, icon, title, summary, widgetLayoutResource,
-            R.id.text_view, isBottomBackground = isBottomBackground
+            R.id.text_view, isBottomBackground = isBottomBackground, key = key
         )
         if (v is TextView) {
+            ModernPreferenceStyle.bindValue(context, v)
             v.text = entry
             if (isBottomBackground) {
                 val bgColor = context.bottomBackground

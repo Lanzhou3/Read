@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="ui_add_book">Add books</string>
+    <string name="ui_add_book_local_desc">Open TXT, EPUB, PDF or other local books</string>
+    <string name="ui_add_book_url_desc">Add a book using its page address</string>
+    <string name="ui_add_book_remote_desc">Browse a remote library or WebDAV server</string>
+    <string name="ui_add_booklist_desc">Restore a shared bookshelf from a file or link</string>
+    <string name="ui_add_source">Add sources</string>
+    <string name="ui_import_source_local_desc">Choose a source JSON or text file</string>
+    <string name="ui_import_source_url_desc">Paste a source address or JSON content</string>
+    <string name="ui_import_source_qr_desc">Scan a source QR code</string>
+    <string name="ui_create_source_desc">Write or edit a source rule</string>
+    <string name="ui_source_empty_title">Add your first book source</string>
+    <string name="ui_source_empty_message">Sources connect search and discovery to your chosen websites. Import a source you trust to get started.</string>
+    <string name="ui_source_filtered_title">No matching sources</string>
+    <string name="ui_source_filtered_message">Try another keyword or clear the current filter.</string>
+    <string name="ui_clear_filter">Clear filter</string>
+    <string name="ui_discovery_empty_title">Discover your next read</string>
+    <string name="ui_discovery_empty_message">Add a book source, then enable its discovery section to browse books here.</string>
+    <string name="ui_discovery_disabled_title">No discovery sections enabled</string>
+    <string name="ui_discovery_disabled_message">Your sources are ready. Open source management to enable discovery for supported sources.</string>
+    <string name="ui_search_welcome">Find a book you love</string>
+    <string name="ui_search_welcome_message">Search by title or author. Results come from your enabled book sources; local bookshelf matches appear as you type.</string>
+    <string name="ui_source_address">Source address or JSON</string>
+    <string name="ui_source_address_help">Paste an https:// address or source JSON. You can review the sources before importing them.</string>
+    <string name="ui_source_input_required">Enter a source address or JSON content</string>
+    <string name="ui_source_preview">Review sources</string>
+    <string name="ui_manage_library">Library tools</string>
+    <string name="ui_appearance_layout">Layout and appearance</string>
+    <string name="ui_content_tools">Content tools</string>
+    <string name="ui_diagnostics">Help and diagnostics</string>
+    <string name="ui_reading_appearance">Reading appearance</string>
+    <string name="ui_reading_controls">Reading controls</string>
+    <string name="ui_reading_controls_hint">Playback, speed and sleep timer</string>
+    <string name="ui_read_aloud_options">Read aloud controls</string>
+    <string name="ui_reading_settings">Reading preferences</string>
+    <string name="ui_sleep_timer">Sleep timer</string>
+    <string name="ui_timer_off">Off</string>
+    <string name="ui_playback_speed">%1$s×</string>
+    <string name="ui_auto_read_title">Automatic page turning</string>
+    <string name="ui_auto_read_hint">Choose how long each page stays on screen</string>
+    <string name="ui_reading_and_appearance">Reading and appearance</string>
+    <string name="ui_books_and_sources">Books and sources</string>
+    <string name="ui_backup_and_connections">Backup and connections</string>
+    <string name="ui_advanced_tools">Advanced tools</string>
+    <string name="ui_navigation_settings">Home and navigation</string>
+    <string name="ui_storage_settings">Storage and cache</string>
+    <string name="ui_media_settings">Audio and headset</string>
+    <string name="ui_migration_tools">Migration tools</string>
+    <string name="ui_web_actions">Connection actions</string>
+    <string name="ui_web_copy">Copy address</string>
+    <string name="ui_web_copy_desc">Use this address on another device</string>
+    <string name="ui_web_open">Open in browser</string>
+    <string name="ui_web_open_desc">Open the bookshelf and source editor</string>
+    <string name="ui_backup_hint">Local backup, restore and WebDAV sync</string>
+    <string name="ui_font_hint">Choose built-in, system or imported fonts</string>
+    <string name="ui_weight_label">Font weight</string>
+    <item type="id" name="empty_state_action" />
+    <item type="id" name="empty_state_secondary" />
+    <string name="ui_save_timer">Save as default</string>
+    <string name="ui_server_address">Server address</string>
+    <string name="ui_server_account">Account</string>
+    <string name="ui_server_password">Password</string>
+    <string name="ui_connection_type">Connection type</string>
+    <string name="ui_server_hint">Connect a WebDAV library using your server address and account.</string>
+    <string name="ui_server_address_required">Enter a server address</string>
+</resources>

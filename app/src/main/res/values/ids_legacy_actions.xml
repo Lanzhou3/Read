@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Keep the original dispatch IDs available after moving import actions to the chooser. -->
+    <item type="id" name="menu_remote" />
+    <item type="id" name="menu_add_local" />
+    <item type="id" name="menu_add_url" />
+    <item type="id" name="menu_import_bookshelf" />
+    <item type="id" name="menu_add_book_source" />
+</resources>

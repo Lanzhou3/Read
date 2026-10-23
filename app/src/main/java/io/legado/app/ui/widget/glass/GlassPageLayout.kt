@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.core.view.children
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
@@ -69,28 +72,28 @@ class GlassPageLayout @JvmOverloads constructor(
         val navigation = rootView.findViewById<GlassSurfaceView>(R.id.bottom_glass)
         val gap = resources.getDimensionPixelSize(R.dimen.glass_content_gap)
         val navMargin = (navigation?.layoutParams as? MarginLayoutParams)?.bottomMargin ?: 0
-        val bottom = if (navigation?.visibility == VISIBLE) navigation.height + navMargin + gap else gap
-        // PreferenceFragmentCompat owns its RecyclerView padding and restored scroll anchor.
-        // Give that fragment a stable viewport rather than competing with its inset listener.
-        val preferenceHost = target.findViewById<View>(R.id.pre_fragment)
-        if (preferenceHost != null) {
-            val top = header.height + gap
-            if (preferenceHost.paddingTop != top || preferenceHost.paddingBottom != bottom) {
-                preferenceHost.setPadding(preferenceHost.paddingLeft, top, preferenceHost.paddingRight, bottom)
-            }
-            return
-        }
+        val systemBottom = ViewCompat.getRootWindowInsets(this)
+            ?.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())?.bottom ?: 0
+        val bottom = if (navigation?.visibility == VISIBLE) navigation.height + navMargin + gap else systemBottom + gap
+        // Insets belong to the scrolling list. Padding its host clips rows before the glass.
         updateScrollViews(target, header.height + gap, bottom)
     }
 
     private fun updateScrollViews(view: View, top: Int, bottom: Int) {
         if (view is RecyclerView) {
+            val firstAdjustment = !originalPadding.containsKey(view)
+            val wasAtTop = !view.canScrollVertically(-1)
             val padding = originalPadding.getOrPut(view) {
                 Rect(view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
             }
             if (view.paddingTop != padding.top + top || view.paddingBottom != padding.bottom + bottom) {
                 view.clipToPadding = false
                 view.setPadding(padding.left, padding.top + top, padding.right, padding.bottom + bottom)
+                // A list already laid out without the overlay inset preserves its old anchor.
+                // Keep an initially top-aligned page below the header instead.
+                if (firstAdjustment && view.isLaidOut && wasAtTop) {
+                    (view.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+                }
             }
         } else if (view is ViewGroup) {
             if (view is SwipeRefreshLayout) {

@@ -1,10 +1,13 @@
 package io.legado.app.ui.font
 
+import android.content.DialogInterface
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.Toolbar
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,17 +16,17 @@ import io.legado.app.base.BaseDialogFragment
 import io.legado.app.constant.AppLog
 import io.legado.app.constant.PreferKey
 import io.legado.app.databinding.DialogFontSelectBinding
+import io.legado.app.help.BuiltInFonts
 import io.legado.app.help.config.AppConfig
 import io.legado.app.lib.dialogs.SelectItem
-import io.legado.app.lib.dialogs.alert
 import io.legado.app.lib.permission.Permissions
 import io.legado.app.lib.permission.PermissionsCompat
-import io.legado.app.lib.theme.primaryColor
+import io.legado.app.ui.book.read.config.ReadingPanelStyle
 import io.legado.app.ui.file.HandleFileContract
+import io.legado.app.ui.widget.dialog.TextDialog
 import io.legado.app.utils.FileDoc
 import io.legado.app.utils.FileUtils
 import io.legado.app.utils.RealPathUtil
-import io.legado.app.utils.applyTint
 import io.legado.app.utils.cnCompare
 import io.legado.app.utils.externalFiles
 import io.legado.app.utils.getPrefString
@@ -31,18 +34,15 @@ import io.legado.app.utils.isContentScheme
 import io.legado.app.utils.list
 import io.legado.app.utils.listFileDocs
 import io.legado.app.utils.putPrefString
-import io.legado.app.utils.setLayout
 import io.legado.app.utils.toastOnUi
 import io.legado.app.utils.viewbindingdelegate.viewBinding
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
 import java.io.File
+import kotlinx.coroutines.launch
 
 /**
  * 字体选择对话框
  */
 class FontSelectDialog : BaseDialogFragment(R.layout.dialog_font_select),
-    Toolbar.OnMenuItemClickListener,
     FontAdapter.CallBack {
     private val fontRegex = Regex("(?i).*\\.[ot]tf")
     private val binding by viewBinding(DialogFontSelectBinding::bind)
@@ -73,54 +73,113 @@ class FontSelectDialog : BaseDialogFragment(R.layout.dialog_font_select),
 
     override fun onStart() {
         super.onStart()
-        setLayout(0.9f, 0.9f)
+        parentFragment?.view?.visibility = View.INVISIBLE
+        ReadingPanelStyle.show(this, 0.62f)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        parentFragment?.view?.visibility = View.VISIBLE
+        super.onDismiss(dialog)
     }
 
     override fun onFragmentCreated(view: View, savedInstanceState: Bundle?) {
-        binding.toolBar.setBackgroundColor(primaryColor)
-        binding.toolBar.setTitle(R.string.select_font)
-        binding.toolBar.inflateMenu(R.menu.font_select)
-        binding.toolBar.menu.applyTint(requireContext())
-        binding.toolBar.setOnMenuItemClickListener(this)
+        ReadingPanelStyle.prepare(view) { dismissAllowingStateLoss() }
+        ReadingPanelStyle.action(binding.importFont, true)
+        binding.importFont.setOnClickListener { openFolder() }
+        ReadingPanelStyle.action(binding.fontLicense, true)
+        binding.fontLicense.setOnClickListener {
+            execute {
+                requireContext().assets.open(BuiltInFonts.WENKAI_LICENSE).bufferedReader().use { it.readText() }
+            }.onSuccess { license ->
+                TextDialog(getString(R.string.reading_font_license), license)
+                    .show(childFragmentManager, "fontLicense")
+            }
+        }
+        val bundledSample = addFontChoice(
+            binding.bundledFonts, getString(R.string.reading_font_wenkai),
+            callBack?.curFontPath == BuiltInFonts.WENKAI
+        ) {
+            callBack?.selectFont(BuiltInFonts.WENKAI)
+            dismissAllowingStateLoss()
+        }
+        val bundledRow = bundledSample.parent as View
+        bundledRow.id = R.id.font_wenkai
+        bundledRow.isEnabled = false
+        execute { requireNotNull(BuiltInFonts.typeface(BuiltInFonts.WENKAI)) }
+            .onSuccess {
+                bundledSample.typeface = it
+                bundledRow.isEnabled = true
+            }.onError {
+                AppLog.put("加载内置字体失败", it)
+                toastOnUi(it.localizedMessage)
+            }
+        val names = resources.getStringArray(R.array.system_typefaces)
+        val families = listOf(Typeface.DEFAULT, Typeface.SERIF, Typeface.MONOSPACE)
+        names.forEachIndexed { index, name ->
+            addFontChoice(
+                binding.systemFonts, name,
+                callBack?.curFontPath.isNullOrEmpty() && AppConfig.systemTypefaces == index
+            ) {
+                AppConfig.systemTypefaces = index
+                onDefaultFontChange()
+                dismissAllowingStateLoss()
+            }.typeface = families[index]
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
 
         val fontPath = getPrefString(PreferKey.fontFolder)
         if (fontPath.isNullOrEmpty()) {
-            openFolder()
+            loadLocalFonts()
+        } else if (fontPath.isContentScheme()) {
+            val doc = DocumentFile.fromTreeUri(requireContext(), Uri.parse(fontPath))
+            if (doc?.canRead() == true) loadFontFiles(FileDoc.fromDocumentFile(doc)) else loadLocalFonts()
         } else {
-            if (fontPath.isContentScheme()) {
-                val doc = DocumentFile.fromTreeUri(requireContext(), Uri.parse(fontPath))
-                if (doc?.canRead() == true) {
-                    loadFontFiles(FileDoc.fromDocumentFile(doc))
-                } else {
-                    openFolder()
-                }
-            } else {
-                loadFontFilesByPermission(fontPath)
-            }
+            loadFontFilesByPermission(fontPath)
         }
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.menu_default -> {
-                val requireContext = requireContext()
-                alert(titleResource = R.string.system_typeface) {
-                    items(
-                        requireContext.resources.getStringArray(R.array.system_typefaces).toList()
-                    ) { _, i ->
-                        AppConfig.systemTypefaces = i
-                        onDefaultFontChange()
-                        dismissAllowingStateLoss()
-                    }
-                }
+    private fun addFontChoice(
+        parent: LinearLayout,
+        name: String,
+        selected: Boolean,
+        onSelected: () -> Unit
+    ): TextView {
+        val density = resources.displayMetrics.density
+        val row = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(-1, -2).apply {
+                bottomMargin = (10 * density).toInt()
             }
-            R.id.menu_other -> {
-                openFolder()
-            }
+            setPadding((16 * density).toInt(), (14 * density).toInt(),
+                (16 * density).toInt(), (14 * density).toInt())
+            ReadingPanelStyle.action(this, selected)
+            isSelected = selected
+            contentDescription = name
+            addView(TextView(context).apply {
+                text = if (selected) "$name  ✓" else name
+                textSize = 13f
+                setTextColor(if (selected) ReadingPanelStyle.accent(context) else ReadingPanelStyle.ink(context))
+            })
+            setOnClickListener { onSelected() }
         }
-        return true
+        val sample = TextView(requireContext()).apply {
+            setText(R.string.reading_font_sample)
+            textSize = 19f
+            setTextColor(ReadingPanelStyle.ink(context))
+            setPadding(0, (8 * density).toInt(), 0, 0)
+        }
+        row.addView(sample)
+        parent.addView(row)
+        return sample
+    }
+
+    private fun loadLocalFonts() {
+        execute { getLocalFonts().sortedWith { first, second -> first.name.cnCompare(second.name) } }
+            .onSuccess {
+                adapter.setItems(it)
+                binding.emptyFonts.isVisible = it.isEmpty()
+            }
     }
 
     private fun openFolder() {
@@ -159,6 +218,7 @@ class FontSelectDialog : BaseDialogFragment(R.layout.dialog_font_select),
             mergeFontItems(fontItems, getLocalFonts())
         }.onSuccess {
             adapter.setItems(it)
+            binding.emptyFonts.isVisible = it.isEmpty()
         }.onError {
             AppLog.put("加载字体文件失败\n${it.localizedMessage}", it)
             toastOnUi("getFontFiles:${it.localizedMessage}")

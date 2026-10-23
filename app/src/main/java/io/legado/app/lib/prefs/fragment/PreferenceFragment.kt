@@ -13,6 +13,7 @@ import io.legado.app.lib.prefs.EditTextPreferenceDialog
 import io.legado.app.lib.prefs.ListPreferenceDialog
 import io.legado.app.lib.prefs.MultiSelectListPreferenceDialog
 import io.legado.app.utils.applyNavigationBarPadding
+import io.legado.app.ui.widget.glass.GlassPageLayout
 
 abstract class PreferenceFragment : PreferenceFragmentCompat() {
 
@@ -21,7 +22,9 @@ abstract class PreferenceFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.clipToPadding = false
-        listView.applyNavigationBarPadding()
+        val floatingChrome = generateSequence(view.parent) { it.parent }
+            .any { it is GlassPageLayout }
+        if (!floatingChrome) listView.applyNavigationBarPadding()
     }
 
     @SuppressLint("RestrictedApi")

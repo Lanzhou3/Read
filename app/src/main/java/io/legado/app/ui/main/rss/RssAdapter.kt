@@ -39,7 +39,7 @@ class RssAdapter(
                 .set(OkHttpModelLoader.sourceOriginOption, item.sourceUrl)
             ImageLoader.load(fragment, lifecycle, item.sourceIcon)
                 .apply(options)
-                .centerCrop()
+                .fitCenter()
                 .placeholder(R.drawable.image_rss)
                 .error(R.drawable.image_rss)
                 .into(ivIcon)

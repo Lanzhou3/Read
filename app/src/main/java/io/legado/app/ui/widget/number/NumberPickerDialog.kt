@@ -14,6 +14,7 @@ class NumberPickerDialog(context: Context) {
     private var maxValue: Int? = null
     private var minValue: Int? = null
     private var value: Int? = null
+    private var formatter: ((Int) -> String)? = null
 
     init {
         builder.setView(R.layout.dialog_number_picker)
@@ -36,6 +37,11 @@ class NumberPickerDialog(context: Context) {
 
     fun setValue(value: Int): NumberPickerDialog {
         this.value = value
+        return this
+    }
+
+    fun setFormatter(format: (Int) -> String): NumberPickerDialog {
+        formatter = format
         return this
     }
 
@@ -70,6 +76,10 @@ class NumberPickerDialog(context: Context) {
             }
             value?.let {
                 np.value = it
+            }
+            formatter?.let { format ->
+                // Display strings also configure NumberPicker's input filter for suffixes.
+                np.displayedValues = (np.minValue..np.maxValue).map(format).toTypedArray()
             }
         }
     }

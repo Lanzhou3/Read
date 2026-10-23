@@ -6,13 +6,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceViewHolder
 import io.legado.app.R
-import io.legado.app.lib.theme.accentColor
 import io.legado.app.lib.theme.bottomBackground
 import io.legado.app.lib.theme.getPrimaryTextColor
 import io.legado.app.lib.theme.getSecondaryTextColor
@@ -45,7 +43,8 @@ open class Preference(context: Context, attrs: AttributeSet) :
             viewId: Int? = null,
             weightWidth: Int = 0,
             weightHeight: Int = 0,
-            isBottomBackground: Boolean = false
+            isBottomBackground: Boolean = false,
+            key: String? = null
         ): T? {
             if (viewHolder == null) return null
             val tvTitle = viewHolder.findViewById(R.id.preference_title) as? TextView
@@ -65,12 +64,8 @@ open class Preference(context: Context, attrs: AttributeSet) :
                 val sTextColor = context.getSecondaryTextColor(isLight)
                 tvSummary?.setTextColor(sTextColor)
             }
-            val iconView = viewHolder.findViewById(R.id.preference_icon)
-            if (iconView is ImageView) {
-                iconView.isVisible = icon != null
-                iconView.setImageDrawable(icon)
-                iconView.setColorFilter(context.accentColor)
-            }
+            ModernPreferenceStyle.bind(context, viewHolder, icon, key,
+                weightLayoutRes != null && weightLayoutRes != 0)
 
             if (weightLayoutRes != null && weightLayoutRes != 0 && viewId != null && viewId != 0) {
                 val lay = viewHolder.findViewById(R.id.preference_widget)
@@ -121,7 +116,7 @@ open class Preference(context: Context, attrs: AttributeSet) :
     open fun onBindView(holder: PreferenceViewHolder) {
         bindView<View>(
             context, holder, icon, title, summary,
-            isBottomBackground = isBottomBackground
+            isBottomBackground = isBottomBackground, key = key
         )
     }
 

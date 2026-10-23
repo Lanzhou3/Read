@@ -40,8 +40,9 @@ class LabelsBar @JvmOverloads constructor(
     fun addLabel(label: String) {
         val tv = if (unUsedViews.isEmpty()) {
             AccentBgTextView(context, null).apply {
-                setPadding(3.dpToPx(), 0, 3.dpToPx(), 0)
-                setRadius(2)
+                setPadding(8.dpToPx(), 3.dpToPx(), 8.dpToPx(), 3.dpToPx())
+                setRadius(12)
+                ModernUi.button(this)
                 val lp = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
                 lp.setMargins(0, 0, 2.dpToPx(), 0)
                 layoutParams = lp

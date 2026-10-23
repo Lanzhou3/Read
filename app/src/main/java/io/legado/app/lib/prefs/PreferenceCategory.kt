@@ -9,8 +9,8 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
 import io.legado.app.R
 import io.legado.app.help.config.AppConfig
-import io.legado.app.lib.theme.accentColor
 import io.legado.app.lib.theme.backgroundColor
+import io.legado.app.lib.theme.getSecondaryTextColor
 import io.legado.app.utils.ColorUtils
 
 
@@ -28,7 +28,7 @@ class PreferenceCategory(context: Context, attrs: AttributeSet) :
         if (view is TextView) {  //  && !view.isInEditMode
             view.text = title
             if (view.isInEditMode) return
-            view.setTextColor(context.accentColor)
+            view.setTextColor(context.getSecondaryTextColor(ColorUtils.isColorLight(context.backgroundColor)))
             view.isVisible = !title.isNullOrEmpty()
 
             val da = holder.findViewById(R.id.preference_divider_above)
@@ -45,12 +45,12 @@ class PreferenceCategory(context: Context, attrs: AttributeSet) :
             }
             if (da is View) {
                 da.setBackgroundColor(dividerColor)
-                da.isVisible = holder.isDividerAllowedAbove
+                da.isVisible = AppConfig.isEInkMode && holder.isDividerAllowedAbove
             }
             val db = holder.findViewById(R.id.preference_divider_below)
             if (db is View) {
                 db.setBackgroundColor(dividerColor)
-                db.isVisible = holder.isDividerAllowedBelow
+                db.isVisible = AppConfig.isEInkMode && holder.isDividerAllowedBelow
             }
         }
     }

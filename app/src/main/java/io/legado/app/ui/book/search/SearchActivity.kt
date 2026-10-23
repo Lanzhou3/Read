@@ -93,6 +93,9 @@ class SearchActivity : VMBaseActivity<ActivityBookSearchBinding, SearchViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         binding.llInputHelp.setBackgroundColor(backgroundColor)
+        binding.searchWelcome.render(R.string.ui_search_welcome, R.string.ui_search_welcome_message,
+            R.string.book_source_manage, R.drawable.ic_search,
+            onPrimary = { startActivity<BookSourceActivity>() })
         initRecyclerView()
         initSearchView()
         initOtherView()
@@ -396,6 +399,8 @@ class SearchActivity : VMBaseActivity<ActivityBookSearchBinding, SearchViewModel
             }.catch {
                 AppLog.put("搜索界面获取搜索历史数据失败\n${it.localizedMessage}", it)
             }.flowOn(IO).conflate().collect {
+                binding.searchWelcome.isVisible = it.isEmpty() && key.isNullOrBlank()
+                binding.tvHistory.isVisible = it.isNotEmpty()
                 historyKeyAdapter.setItems(it)
                 if (it.isEmpty()) {
                     binding.tvClearHistory.invisible()

@@ -200,11 +200,25 @@ class ReadMenu @JvmOverloads constructor(
         brightnessBackground.cornerRadius = 5F.dpToPx()
         brightnessBackground.setColor(ColorUtils.adjustAlpha(bgColor, 0.5f))
         llBrightness.background = brightnessBackground
+        readQuickActions.background = GradientDrawable().apply {
+            cornerRadius = 24F.dpToPx()
+            setColor(ColorUtils.adjustAlpha(bgColor, 0.90f))
+        }
         if (AppConfig.isEInkMode) {
             titleBar.setBackgroundResource(R.drawable.bg_eink_border_bottom)
             llBottomBg.setBackgroundResource(R.drawable.bg_eink_border_top)
         } else {
-            llBottomBg.setBackgroundColor(Color.TRANSPARENT)
+            llBottomBg.background = GradientDrawable().apply {
+                setColor(ColorUtils.adjustAlpha(bgColor, 0.78f))
+            }
+        }
+        titleBar.toolbar.background = GradientDrawable().apply {
+            cornerRadius = 28F.dpToPx()
+            setColor(ColorUtils.adjustAlpha(bgColor, 0.72f))
+        }
+        titleBarAddition.background = GradientDrawable().apply {
+            cornerRadius = 12F.dpToPx()
+            setColor(ColorUtils.adjustAlpha(bgColor, 0.90f))
         }
         readBottomGlass.setSurfaceColor(bgColor)
         bindGlassBackdrop()
@@ -274,6 +288,8 @@ class ReadMenu @JvmOverloads constructor(
     }
 
     fun upBrightnessState() {
+        binding.ivBrightnessAuto.contentDescription = context.getString(R.string.brightness_auto,
+            context.getString(if (brightnessAuto()) R.string.enabled else R.string.disabled))
         if (brightnessAuto()) {
             binding.ivBrightnessAuto.setColorFilter(context.accentColor)
             binding.seekBrightness.isEnabled = false

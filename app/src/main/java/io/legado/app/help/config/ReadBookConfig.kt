@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.Keep
 import androidx.core.graphics.toColorInt
 import io.legado.app.R
+import io.legado.app.help.BuiltInFonts
 import io.legado.app.constant.AppLog
 import io.legado.app.constant.PageAnim
 import io.legado.app.constant.PreferKey
@@ -467,7 +468,11 @@ object ReadBookConfig {
         ZipUtils.unZipToPath(zipFile, configDir)
         val configFile = configDir.getFile(configFileName)
         val config: Config = GSON.fromJsonObject<Config>(configFile.readText()).getOrThrow()
-        if (config.textFont.isNotEmpty()) {
+        if (config.textFont.startsWith("builtin:")) {
+            if (!BuiltInFonts.contains(config.textFont)) {
+                config.textFont = ""
+            }
+        } else if (config.textFont.isNotEmpty()) {
             val fontName = config.textFont
             val fontPath =
                 FileUtils.getPath(appCtx.externalFiles, "font", fontName)

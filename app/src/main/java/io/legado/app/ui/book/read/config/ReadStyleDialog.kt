@@ -2,13 +2,15 @@ package io.legado.app.ui.book.read.config
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.get
+import androidx.core.view.isVisible
 import com.github.liuyueyi.quick.transfer.constants.TransType
 import io.legado.app.R
+import io.legado.app.help.BuiltInFonts
 import io.legado.app.base.BaseDialogFragment
 import io.legado.app.base.adapter.ItemViewHolder
 import io.legado.app.base.adapter.RecyclerAdapter
@@ -29,9 +31,8 @@ import io.legado.app.utils.ColorUtils
 import io.legado.app.utils.dpToPx
 import io.legado.app.utils.getIndexById
 import io.legado.app.utils.postEvent
-import io.legado.app.utils.showDialogFragment
 import io.legado.app.utils.viewbindingdelegate.viewBinding
-import splitties.views.onLongClick
+import java.net.URLDecoder
 
 class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
     FontSelectDialog.CallBack {
@@ -39,26 +40,37 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
     private val binding by viewBinding(DialogReadBookStyleBinding::bind)
     private val callBack get() = activity as? ReadBookActivity
     private lateinit var styleAdapter: StyleAdapter
+    private var savedTab = 0
+
+    private fun panelHeight() = when (savedTab) { 1 -> 0.48f; 2 -> 0.43f; else -> 0.68f }
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.run {
-            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setBackgroundDrawableResource(R.color.background)
-            decorView.setPadding(0, 0, 0, 0)
-            val attr = attributes
-            attr.dimAmount = 0.0f
-            attr.gravity = Gravity.BOTTOM
-            attributes = attr
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
+        ReadingPanelStyle.show(this, panelHeight())
     }
 
     override fun onFragmentCreated(view: View, savedInstanceState: Bundle?) {
         (activity as ReadBookActivity).bottomDialog++
+        savedTab = savedInstanceState?.getInt("appearanceTab") ?: 0
         initView()
         initData()
         initViewEvent()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("appearanceTab", savedTab)
+    }
+
+    private fun updateFontLabel() {
+        binding.tvTextFontTitle.text = BuiltInFonts.displayName(
+            requireContext(), ReadBookConfig.textFont
+        ) ?: if (ReadBookConfig.textFont.isBlank()) {
+            resources.getStringArray(R.array.system_typefaces).getOrElse(AppConfig.systemTypefaces) { getString(R.string.reading_font_default) }
+        } else {
+            runCatching { URLDecoder.decode(ReadBookConfig.textFont, "UTF-8") }.getOrDefault(ReadBookConfig.textFont)
+                .substringAfterLast('/').substringBeforeLast('.')
+        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -71,10 +83,28 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
         val bg = requireContext().bottomBackground
         val isLight = ColorUtils.isColorLight(bg)
         val textColor = requireContext().getPrimaryTextColor(isLight)
-        rootView.setBackgroundColor(bg)
-        tvPageAnim.setTextColor(textColor)
-        tvBgTs.setTextColor(textColor)
-        tvShareLayout.setTextColor(textColor)
+        ReadingPanelStyle.prepare(root) { dismissAllowingStateLoss() }
+        val tabs = listOf(tabType, tabPage, tabTheme)
+        fun selectTab(index: Int) {
+            savedTab = index
+            ReadingPanelStyle.tabs(tabs, index)
+            sectionType.isVisible = index == 0
+            sectionPage.isVisible = index == 1
+            sectionTheme.isVisible = index == 2
+            panelScroll.scrollTo(0, 0)
+            if (isResumed) ReadingPanelStyle.show(this@ReadStyleDialog, panelHeight())
+        }
+        tabs.forEachIndexed { index, tab -> tab.setOnClickListener { selectTab(index) } }
+        selectTab(savedTab)
+        listOf(tvTextFont, tvPadding, tvTip, shareLayoutRow).forEach { ReadingPanelStyle.action(it) }
+        ReadingPanelStyle.icon(tvTextFontIcon, 0xFF7942D9.toInt())
+        ReadingPanelStyle.icon(tvPaddingIcon, 0xFF00836B.toInt())
+        ReadingPanelStyle.icon(tvTipIcon, 0xFFD64925.toInt())
+        listOf(textFontWeightConverter, tvTextIndent, chineseConverter).forEach { ReadingPanelStyle.action(it) }
+        rgPageAnim.children.filterIsInstance<TextView>().forEach { ReadingPanelStyle.radio(it) }
+        shareLayoutRow.setOnClickListener { cbShareLayout.isChecked = !cbShareLayout.isChecked }
+        io.legado.app.lib.prefs.ModernPreferenceStyle.bindSwitch(requireContext(), cbShareLayout)
+        updateFontLabel()
         dsbTextSize.valueFormat = {
             (it + 5).toString()
         }
@@ -88,6 +118,8 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
         styleAdapter.addFooterView {
             ItemReadStyleBinding.inflate(layoutInflater, it, false).apply {
                 ivStyle.setPadding(6.dpToPx(), 6.dpToPx(), 6.dpToPx(), 6.dpToPx())
+                styleName.setText(R.string.add)
+                styleName.setTextColor(textColor)
                 ivStyle.setText(null)
                 ivStyle.setColorFilter(textColor)
                 ivStyle.borderColor = textColor
@@ -115,7 +147,7 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
             postEvent(EventBus.UP_CONFIG, arrayListOf(8, 9, 6))
         }
         tvTextFont.setOnClickListener {
-            showDialogFragment<FontSelectDialog>()
+            FontSelectDialog().show(childFragmentManager, "readingFont")
         }
         tvTextIndent.setOnClickListener {
             context?.selector(
@@ -139,7 +171,7 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
             callBack?.upPageAnim()
             ReadBook.loadContent(false)
         }
-        cbShareLayout.onCheckedChangeListener = { _, isChecked ->
+        cbShareLayout.setOnCheckedChangeListener { _, isChecked ->
             ReadBookConfig.shareLayout = isChecked
             upView()
             postEvent(EventBus.UP_CONFIG, arrayListOf(1, 2, 5))
@@ -204,6 +236,7 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
     override fun selectFont(path: String) {
         if (path != ReadBookConfig.textFont || path.isEmpty()) {
             ReadBookConfig.textFont = path
+            binding.root.post { if (isAdded) updateFontLabel() }
             postEvent(EventBus.UP_CONFIG, arrayListOf(2, 5))
         }
     }
@@ -222,14 +255,19 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
             payloads: MutableList<Any>
         ) {
             binding.apply {
-                ivStyle.setText(item.name.ifBlank { "文字" })
+                ivStyle.setText("Aa")
+                styleName.text = item.name.ifBlank { getString(R.string.text) }
+                styleName.setTextColor(ReadingPanelStyle.ink(context))
+                root.contentDescription = styleName.text
+                root.isSelected = ReadBookConfig.styleSelect == holder.layoutPosition
+                ivStyle.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
                 ivStyle.setTextColor(item.curTextColor())
                 ivStyle.setImageDrawable(item.curBgDrawable(100, 150))
                 if (ReadBookConfig.styleSelect == holder.layoutPosition) {
                     ivStyle.borderColor = accentColor
                     ivStyle.setTextBold(true)
                 } else {
-                    ivStyle.borderColor = item.curTextColor()
+                    ivStyle.borderColor = ColorUtils.withAlpha(item.curTextColor(), 0.18f)
                     ivStyle.setTextBold(false)
                 }
             }
@@ -237,15 +275,9 @@ class ReadStyleDialog : BaseDialogFragment(R.layout.dialog_read_book_style),
 
         override fun registerListener(holder: ItemViewHolder, binding: ItemReadStyleBinding) {
             binding.apply {
-                ivStyle.setOnClickListener {
-                    if (ivStyle.isInView) {
-                        changeBgTextConfig(holder.layoutPosition)
-                    }
-                }
-                ivStyle.onLongClick(ivStyle.isInView) {
-                    if (ivStyle.isInView) {
-                        showBgTextConfig(holder.layoutPosition)
-                    }
+                listOf(root, ivStyle).forEach { target ->
+                    target.setOnClickListener { changeBgTextConfig(holder.layoutPosition) }
+                    target.setOnLongClickListener { showBgTextConfig(holder.layoutPosition) }
                 }
             }
         }

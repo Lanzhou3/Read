@@ -1,21 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/btn_bg_press" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="?attr/actionBarStyle"
-        app:titleTextAppearance="@style/ToolbarTitle"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="12dp">
+        <TextView android:id="@+id/panel_title"
+            style="@style/ReadingPanelTitle"
+            android:text="@string/select_font"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <TextView android:id="@+id/panel_done"
+            style="@style/ReadingPanelAction"
+            android:text="@string/reading_done" />
+    </LinearLayout>
 
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical">
+                <TextView style="@style/ReadingPanelText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/reading_fonts_bundled" />
+
+                <TextView android:id="@+id/font_license"
+                    style="@style/ReadingPanelAction"
+                    android:text="@string/reading_font_license" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/bundled_fonts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView style="@style/ReadingPanelText"
+                android:layout_width="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/reading_fonts_system" />
+
+            <LinearLayout android:id="@+id/system_fonts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+                <TextView android:id="@+id/local_fonts_title"
+                    style="@style/ReadingPanelText"
+                    android:text="@string/reading_fonts_local"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView android:id="@+id/import_font"
+                    style="@style/ReadingPanelAction"
+                    android:text="@string/reading_font_import" />
+            </LinearLayout>
+
+            <TextView android:id="@+id/empty_fonts"
+                style="@style/ReadingPanelCaption"
+                android:text="@string/reading_font_empty"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp" />
+
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

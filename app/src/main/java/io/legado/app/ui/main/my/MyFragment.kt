@@ -18,6 +18,7 @@ import io.legado.app.lib.prefs.SwitchPreference
 import io.legado.app.lib.prefs.fragment.PreferenceFragment
 import io.legado.app.lib.theme.primaryColor
 import io.legado.app.service.WebService
+import io.legado.app.ui.widget.dialog.ActionSheet
 import io.legado.app.ui.about.AboutActivity
 import io.legado.app.ui.about.ReadRecordActivity
 import io.legado.app.ui.book.bookmark.AllBookmarkActivity
@@ -92,7 +93,9 @@ class MyFragment() : BaseFragment(R.layout.fragment_my_config), MainFragmentInte
                 }
                 true
             }
+            findPreference<Preference>("webServiceActions")?.isVisible = WebService.isRun
             observeEventSticky<String>(EventBus.WEB_SERVICE) {
+                findPreference<Preference>("webServiceActions")?.isVisible = WebService.isRun
                 findPreference<SwitchPreference>(PreferKey.webService)?.let {
                     it.isChecked = WebService.isRun
                     it.summary = if (WebService.isRun) {
@@ -164,7 +167,16 @@ class MyFragment() : BaseFragment(R.layout.fragment_my_config), MainFragmentInte
                 "fileManage" -> startActivity<FileManageActivity>()
                 "readRecord" -> startActivity<ReadRecordActivity>()
                 "about" -> startActivity<AboutActivity>()
-                "exit" -> activity?.finish()
+                "webServiceActions" -> if (WebService.isRun) {
+                    ActionSheet.show(requireContext(), R.string.ui_web_actions, listOf(
+                        ActionSheet.Action(R.string.ui_web_copy, R.string.ui_web_copy_desc, R.drawable.ic_cfg_web) {
+                            requireContext().sendToClip(WebService.hostAddress)
+                        },
+                        ActionSheet.Action(R.string.ui_web_open, R.string.ui_web_open_desc, R.drawable.ic_cfg_web) {
+                            requireContext().openUrl(WebService.hostAddress)
+                        }
+                    ))
+                }
             }
             return super.onPreferenceTreeClick(preference)
         }

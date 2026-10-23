@@ -22,6 +22,10 @@ import io.legado.app.R
 import io.legado.app.help.config.AppConfig
 import io.legado.app.lib.theme.elevation
 import io.legado.app.lib.theme.primaryColor
+import io.legado.app.lib.theme.bottomBackground
+import io.legado.app.lib.theme.getPrimaryTextColor
+import io.legado.app.ui.widget.glass.GlassMaterialSpec
+import io.legado.app.utils.ColorUtils
 import io.legado.app.ui.widget.glass.GlassSurfaceView
 import eightbitlab.com.blurview.BlurTarget
 import io.legado.app.utils.activity
@@ -254,6 +258,12 @@ class TitleBar @JvmOverloads constructor(
         findViewById<GlassSurfaceView>(R.id.title_glass)?.bindBackdrop(target)
         super.setBackgroundColor(Color.TRANSPARENT)
         elevation = 0.1f
+        val navigationColor = navigationIconTint?.defaultColor ?: GlassMaterialSpec.readableForeground(
+            context, context.getPrimaryTextColor(ColorUtils.isColorLight(context.bottomBackground))
+        )
+        toolbar.navigationIcon = toolbar.navigationIcon?.mutate()?.apply {
+            colorFilter = PorterDuffColorFilter(navigationColor, PorterDuff.Mode.SRC_IN)
+        }
     }
 
     override fun setBackground(background: Drawable?) {

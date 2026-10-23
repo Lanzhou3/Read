@@ -17,7 +17,7 @@ import io.legado.app.R
 import io.legado.app.constant.AppLog
 import io.legado.app.help.config.AppConfig
 import io.legado.app.help.coroutine.Coroutine
-import io.legado.app.lib.theme.ThemeStore
+import io.legado.app.lib.theme.filletBackground
 import io.legado.app.utils.dpToPx
 import io.legado.app.utils.setBackgroundKeepPadding
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +64,8 @@ abstract class BaseDialogFragment(
                     }
                 }
             })
+        } else {
+            dialog?.window?.setBackgroundDrawableResource(R.color.transparent)
         }
     }
 
@@ -81,7 +83,8 @@ abstract class BaseDialogFragment(
             view.findViewById<View>(R.id.vw_bg)?.setOnClickListener(null)
             view.setOnClickListener { dismiss() }
         } else if (!AppConfig.isEInkMode) {
-            view.setBackgroundColor(ThemeStore.backgroundColor())
+            view.background = requireContext().filletBackground
+            view.clipToOutline = true
         }
         onFragmentCreated(view, savedInstanceState)
         observeLiveBus()

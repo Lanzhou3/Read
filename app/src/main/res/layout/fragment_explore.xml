@@ -17,20 +17,12 @@
 
             tools:listitem="@layout/item_find_book" />
 
-        <TextView
-            android:id="@+id/tv_empty_msg"
-            app:drawableTopCompat="@drawable/ic_bottom_explore"
-            android:drawablePadding="16dp"
-            android:padding="24dp"
+        <io.legado.app.ui.widget.EmptyStateView
+            android:id="@+id/empty_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="32dp"
-            android:gravity="center"
-            android:lineSpacingExtra="6dp"
-            android:textColor="@color/secondaryText"
-            android:textSize="16sp"
-            android:text="@string/explore_empty"
+            android:layout_margin="24dp"
             android:visibility="gone" />
 
     </io.legado.app.ui.widget.glass.GlassBackdropTarget>

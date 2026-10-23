@@ -62,7 +62,8 @@ class IconListPreference(context: Context, attrs: AttributeSet) : ListPreference
             widgetLayoutResource,
             R.id.preview,
             50,
-            50
+            50,
+            key = key
         )
         if (v is ImageView) {
             val selectedIndex = findIndexOfValue(value)

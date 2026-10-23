@@ -14,6 +14,9 @@ class GlassBackdropTarget @JvmOverloads constructor(context: Context, attrs: Att
 
     private val snapshot = if (Build.VERSION.SDK_INT >= 33) Snapshot() else null
 
+    internal val snapshotVersion: Long
+        get() = if (Build.VERSION.SDK_INT >= 33) snapshot?.version ?: 0L else 0L
+
     @RequiresApi(33)
     fun drawSnapshot(canvas: Canvas) {
         snapshot?.node?.let(canvas::drawRenderNode)
@@ -28,6 +31,7 @@ class GlassBackdropTarget @JvmOverloads constructor(context: Context, attrs: Att
             background?.draw(recording)
             super.dispatchDraw(recording)
             capture.node.endRecording()
+            capture.version++
             canvas.drawRenderNode(capture.node)
         } else {
             super.dispatchDraw(canvas)
@@ -37,5 +41,6 @@ class GlassBackdropTarget @JvmOverloads constructor(context: Context, attrs: Att
     @RequiresApi(33)
     private class Snapshot {
         val node = RenderNode("Glass background")
+        var version = 0L
     }
 }

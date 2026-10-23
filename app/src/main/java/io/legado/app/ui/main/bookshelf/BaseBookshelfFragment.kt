@@ -28,6 +28,7 @@ import io.legado.app.ui.book.search.SearchActivity
 import io.legado.app.ui.file.HandleFileContract
 import io.legado.app.ui.main.MainFragmentInterface
 import io.legado.app.ui.main.MainViewModel
+import io.legado.app.ui.widget.dialog.ActionSheet
 import io.legado.app.ui.widget.dialog.WaitDialog
 import io.legado.app.utils.checkByIndex
 import io.legado.app.utils.getCheckedIndex
@@ -93,6 +94,7 @@ abstract class BaseBookshelfFragment(layoutId: Int) : VMBaseFragment<BookshelfVi
     override fun onCompatOptionsItemSelected(item: MenuItem) {
         super.onCompatOptionsItemSelected(item)
         when (item.itemId) {
+            R.id.menu_add_book -> showAddBookActions()
             R.id.menu_remote -> startActivity<RemoteBookActivity>()
             R.id.menu_search -> startActivity<SearchActivity>()
             R.id.menu_update_toc -> activityViewModel.upToc(books)
@@ -119,6 +121,23 @@ abstract class BaseBookshelfFragment(layoutId: Int) : VMBaseFragment<BookshelfVi
             R.id.menu_import_bookshelf -> importBookshelfAlert(groupId)
             R.id.menu_log -> showDialogFragment<AppLogDialog>()
         }
+    }
+
+    private fun showAddBookActions() {
+        ActionSheet.show(requireContext(), R.string.ui_add_book, listOf(
+            ActionSheet.Action(R.string.book_local, R.string.ui_add_book_local_desc, R.drawable.ic_import) {
+                startActivity<ImportBookActivity>()
+            },
+            ActionSheet.Action(R.string.add_url, R.string.ui_add_book_url_desc, R.drawable.ic_add_online) {
+                showAddBookByUrlAlert()
+            },
+            ActionSheet.Action(R.string.add_remote_book, R.string.ui_add_book_remote_desc, R.drawable.ic_cfg_web) {
+                startActivity<RemoteBookActivity>()
+            },
+            ActionSheet.Action(R.string.import_bookshelf, R.string.ui_add_booklist_desc, R.drawable.ic_import) {
+                importBookshelfAlert(groupId)
+            }
+        ))
     }
 
     protected fun initBookGroupData() {

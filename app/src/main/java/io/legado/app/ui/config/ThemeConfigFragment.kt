@@ -173,6 +173,7 @@ class ThemeConfigFragment : PreferenceFragment(),
                 .setMinValue(0)
                 .setMaxValue(100)
                 .setValue(getPrefInt(PreferKey.glassStrength, 70))
+                .setFormatter { "$it%" }
                 .show { putPrefInt(PreferKey.glassStrength, it) }
 
             PreferKey.barElevation -> NumberPickerDialog(requireContext())
@@ -193,7 +194,8 @@ class ThemeConfigFragment : PreferenceFragment(),
                 .setTitle(getString(R.string.font_scale))
                 .setMaxValue(16)
                 .setMinValue(8)
-                .setValue(10)
+                .setValue(getPrefInt(PreferKey.fontScale, 10).takeIf { it in 8..16 } ?: 10)
+                .setFormatter { "${it * 10}%" }
                 .setCustomButton((R.string.btn_default_s)) {
                     putPrefInt(PreferKey.fontScale, 0)
                     recreateActivities()

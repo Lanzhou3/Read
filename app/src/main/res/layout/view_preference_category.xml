@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
-
+    android:orientation="vertical">
     <View
         android:id="@+id/preference_divider_above"
         android:layout_width="match_parent"
-        android:layout_height="8dp" />
-
+        android:layout_height="1dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/preference_title"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
-        android:background="@drawable/bg_prefs_color"
-        android:paddingLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/accent"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="8dp"
+        android:textSize="13sp"
+        android:letterSpacing="0.04"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/secondaryText" />
     <View
         android:id="@+id/preference_divider_below"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="8dp" />
-
+        android:layout_height="1dp"
+        android:visibility="gone" />
 </LinearLayout>

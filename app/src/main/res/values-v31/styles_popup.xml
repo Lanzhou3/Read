@@ -1,0 +1,8 @@
+<resources>
+    <style name="Style.PopupMenuList" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:background">@drawable/bg_popup_menu</item>
+        <item name="android:clipToOutline">true</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+</resources>

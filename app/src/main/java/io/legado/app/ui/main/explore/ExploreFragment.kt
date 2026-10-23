@@ -26,6 +26,7 @@ import io.legado.app.lib.theme.primaryTextColor
 import io.legado.app.ui.book.explore.ExploreShowActivity
 import io.legado.app.ui.book.search.SearchActivity
 import io.legado.app.ui.book.search.SearchScope
+import io.legado.app.ui.book.source.manage.BookSourceActivity
 import io.legado.app.ui.book.source.edit.BookSourceEditActivity
 import io.legado.app.ui.main.MainFragmentInterface
 import io.legado.app.utils.applyTint
@@ -39,6 +40,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
@@ -157,15 +159,32 @@ class ExploreFragment() : VMBaseFragment<ExploreViewModel>(R.layout.fragment_exp
                 else -> {
                     appDb.bookSourceDao.flowExplore(searchKey)
                 }
+            }.combine(appDb.bookSourceDao.flowAll()) { visible, all ->
+                visible to all.isNotEmpty()
             }.flowWithLifecycleAndDatabaseChange(
                 viewLifecycleOwner.lifecycle,
                 Lifecycle.State.RESUMED,
                 AppDatabase.BOOK_SOURCE_TABLE_NAME
             ).catch {
                 AppLog.put("发现界面更新数据出错", it)
-            }.conflate().flowOn(IO).collect {
-                binding.tvEmptyMsg.isGone = it.isNotEmpty() || searchView.query.isNotEmpty()
-                adapter.setItems(it, diffItemCallBack)
+            }.conflate().flowOn(IO).collect { (items, hasSources) ->
+                binding.emptyState.isGone = items.isNotEmpty()
+                if (items.isEmpty()) {
+                    val filtered = searchView.query.isNotBlank()
+                    binding.emptyState.render(
+                        if (filtered) R.string.ui_source_filtered_title else if (hasSources) R.string.ui_discovery_disabled_title else R.string.ui_discovery_empty_title,
+                        if (filtered) R.string.ui_source_filtered_message else if (hasSources) R.string.ui_discovery_disabled_message else R.string.ui_discovery_empty_message,
+                        if (filtered) R.string.ui_clear_filter else if (hasSources) R.string.book_source_manage else R.string.ui_add_source,
+                        R.drawable.ic_bottom_explore,
+                        if (filtered || !hasSources) R.string.book_source_manage else 0,
+                        onPrimary = {
+                            if (filtered) searchView.setQuery("", false)
+                            else startActivity<BookSourceActivity> { putExtra("addSource", !hasSources) }
+                        },
+                        onAlternative = { startActivity<BookSourceActivity>() }
+                    )
+                }
+                adapter.setItems(items, diffItemCallBack)
                 delay(500)
             }
         }

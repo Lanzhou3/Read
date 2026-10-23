@@ -1,213 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/background_menu"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/btn_bg_press" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/ll_tts_SpeechRate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/tv_read_speed_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="@string/auto_page_speed"
-                android:textColor="@color/primaryText"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_read_speed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <io.legado.app.lib.theme.view.ThemeSeekBar
-            android:id="@+id/seek_auto_read"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:min="1"
-            android:max="120"
-            tools:ignore="UnusedAttribute" />
-
+        android:minHeight="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="12dp">
+        <TextView
+            android:id="@+id/panel_title"
+            style="@style/ReadingPanelTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/ui_auto_read_title" />
+        <TextView
+            android:id="@+id/panel_done"
+            style="@style/ReadingPanelAction"
+            android:text="@string/reading_done" />
     </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        style="@style/ReadingPanelCaption"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
-
-        <!--目录按钮-->
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="12dp"
+        android:text="@string/ui_auto_read_hint" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/panel_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="false">
         <LinearLayout
-            android:id="@+id/ll_catalog"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/chapter_list"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:paddingBottom="7dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_catalog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="16dp"
+            android:orientation="vertical">
+            <io.legado.app.ui.book.read.config.ReadSettingSlider
+                android:id="@+id/speed_slider"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/chapter_list"
-                android:src="@drawable/ic_toc"
-                app:tint="@color/primaryText"
-                tools:ignore="NestedWeights" />
-
-            <TextView
-                android:id="@+id/tv_catalog"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="3dp"
-                android:text="@string/chapter_list"
-                android:maxLines="1"
-                android:textColor="@color/primaryText"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-        <!--调节按钮-->
-        <LinearLayout
-            android:id="@+id/ll_main_menu"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/main_menu"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:paddingBottom="7dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_main_menu"
+                android:layout_marginTop="12dp"
+                app:title="@string/auto_page_speed"
+                app:max="119" />
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/main_menu"
-                android:src="@drawable/ic_menu"
-                app:tint="@color/primaryText"
-                tools:ignore="NestedWeights" />
-
-            <TextView
-                android:id="@+id/tv_main_menu"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="3dp"
-                android:text="@string/main_menu"
-                android:maxLines="1"
-                android:textColor="@color/primaryText"
-                android:textSize="12sp" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:id="@+id/ll_catalog"
+                    style="@style/ReadingPanelAction"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/chapter_list"
+                    android:layout_marginHorizontal="3dp" />
+                <TextView
+                    android:id="@+id/ll_main_menu"
+                    style="@style/ReadingPanelAction"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/main_menu"
+                    android:layout_marginHorizontal="3dp" />
+                <TextView
+                    android:id="@+id/ll_auto_page_stop"
+                    style="@style/ReadingPanelAction"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/stop"
+                    android:layout_marginHorizontal="3dp" />
+                <TextView
+                    android:id="@+id/ll_setting"
+                    style="@style/ReadingPanelAction"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/setting"
+                    android:layout_marginHorizontal="3dp" />
+            </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-        <!--界面按钮-->
-        <LinearLayout
-            android:id="@+id/ll_auto_page_stop"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/stop"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:paddingBottom="7dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_auto_page_stop"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/stop"
-                android:src="@drawable/ic_auto_page_stop"
-                app:tint="@color/primaryText"
-                tools:ignore="NestedWeights" />
-
-            <TextView
-                android:id="@+id/tv_auto_page_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="3dp"
-                android:text="@string/stop"
-                android:maxLines="1"
-                android:textColor="@color/primaryText"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-        <!--设置按钮-->
-        <LinearLayout
-            android:id="@+id/ll_setting"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/setting"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:paddingBottom="7dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_setting"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/setting"
-                android:src="@drawable/ic_settings"
-                app:tint="@color/primaryText"
-                tools:ignore="NestedWeights" />
-
-            <TextView
-                android:id="@+id/tv_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="3dp"
-                android:text="@string/setting"
-                android:maxLines="1"
-                android:textColor="@color/primaryText"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

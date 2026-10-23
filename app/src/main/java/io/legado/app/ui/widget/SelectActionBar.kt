@@ -5,7 +5,9 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
@@ -39,7 +41,10 @@ class SelectActionBar @JvmOverloads constructor(
 
     init {
         if (!isInEditMode) {
-            setBackgroundColor(context.bottomBackground)
+            background = ModernUi.shape(context, context.bottomBackground, 24)
+            clipToOutline = true
+            ModernUi.button(binding.btnRevertSelection)
+            ModernUi.button(binding.btnSelectActionMain)
             elevation = context.elevation
             binding.cbSelectedAll.setTextColor(primaryTextColor)
             TintHelper.setTint(binding.cbSelectedAll, context.accentColor, !bgIsLight)
@@ -51,6 +56,17 @@ class SelectActionBar @JvmOverloads constructor(
             binding.btnSelectActionMain.setOnClickListener { callBack?.onClickSelectBarMainAction() }
             binding.ivMenuMore.setOnClickListener { selMenu?.show() }
             applyNavigationBarPadding()
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        (layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
+            val gap = ModernUi.dp(context, 12)
+            params.marginStart = maxOf(params.marginStart, gap)
+            params.marginEnd = maxOf(params.marginEnd, gap)
+            params.bottomMargin = maxOf(params.bottomMargin, ModernUi.dp(context, 8))
+            layoutParams = params
         }
     }
 
@@ -80,6 +96,7 @@ class SelectActionBar @JvmOverloads constructor(
     }
 
     fun upCountView(selectCount: Int, allCount: Int) = binding.run {
+        this@SelectActionBar.isVisible = allCount > 0
         if (selectCount == 0) {
             cbSelectedAll.isChecked = false
         } else {
@@ -104,6 +121,8 @@ class SelectActionBar @JvmOverloads constructor(
     }
 
     private fun setMenuClickable(isClickable: Boolean) = binding.run {
+        btnRevertSelection.alpha = if (isClickable) 1f else 0.45f
+        btnSelectActionMain.alpha = if (isClickable) 1f else 0.45f
         btnRevertSelection.isEnabled = isClickable
         btnRevertSelection.isClickable = isClickable
         btnSelectActionMain.isEnabled = isClickable

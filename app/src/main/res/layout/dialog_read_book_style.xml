@@ -1,309 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/background"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
-
-        <io.legado.app.ui.book.read.config.TextFontWeightConverter
-            android:id="@+id/text_font_weight_converter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingTop="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="4dp"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            app:radius="3dp" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <io.legado.app.ui.widget.text.StrokeTextView
-            android:id="@+id/tv_text_font"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingTop="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="4dp"
-            android:text="@string/text_font"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            app:radius="3dp" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <io.legado.app.ui.widget.text.StrokeTextView
-            android:id="@+id/tv_text_indent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingTop="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="4dp"
-            android:text="@string/text_indent"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            app:radius="3dp" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <io.legado.app.ui.book.read.config.ChineseConverter
-            android:id="@+id/chinese_converter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingTop="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="4dp"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            app:radius="3dp" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <io.legado.app.ui.widget.text.StrokeTextView
-            android:id="@+id/tv_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingTop="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="4dp"
-            android:text="@string/padding"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            app:radius="3dp" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <io.legado.app.ui.widget.text.StrokeTextView
-            android:id="@+id/tv_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:paddingTop="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="4dp"
-            android:text="@string/information"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            app:radius="3dp" />
-
-    </LinearLayout>
-
-    <io.legado.app.ui.widget.DetailSeekBar
-        android:id="@+id/dsb_text_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        app:isBottomBackground="true"
-        app:max="45"
-        app:title="@string/text_size" />
-
-    <io.legado.app.ui.widget.DetailSeekBar
-        android:id="@+id/dsb_text_letter_spacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        app:isBottomBackground="true"
-        app:max="100"
-        app:title="@string/text_letter_spacing" />
-
-    <io.legado.app.ui.widget.DetailSeekBar
-        android:id="@+id/dsb_line_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        app:isBottomBackground="true"
-        app:max="20"
-        app:title="@string/line_size" />
-
-    <io.legado.app.ui.widget.DetailSeekBar
-        android:id="@+id/dsb_paragraph_spacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        app:isBottomBackground="true"
-        app:max="20"
-        app:title="@string/paragraph_size" />
-
-    <View
-        android:id="@+id/vw_bg_fg"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
+    <View android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/btn_bg_press" />
 
-    <TextView
-        android:id="@+id/tv_page_anim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="4dp"
-        android:alpha="0.75"
-        android:text="@string/page_anim"
-        android:textSize="12sp" />
-
-    <RadioGroup
-        android:id="@+id/rg_page_anim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="11dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <io.legado.app.lib.theme.view.ThemeRadioNoButton
-            android:id="@+id/rb_anim0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/page_anim_cover"
-            app:isBottomBackground="true" />
-
-        <io.legado.app.lib.theme.view.ThemeRadioNoButton
-            android:id="@+id/rb_anim1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/page_anim_slide"
-            app:isBottomBackground="true" />
-
-        <io.legado.app.lib.theme.view.ThemeRadioNoButton
-            android:id="@+id/rb_simulation_anim"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/page_anim_simulation"
-            app:isBottomBackground="true" />
-
-        <io.legado.app.lib.theme.view.ThemeRadioNoButton
-            android:id="@+id/rb_scroll_anim"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/page_anim_scroll"
-            app:isBottomBackground="true" />
-
-        <io.legado.app.lib.theme.view.ThemeRadioNoButton
-            android:id="@+id/rb_no_anim"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/page_anim_none"
-            app:isBottomBackground="true" />
-
-    </RadioGroup>
-
-    <View
-        android:id="@+id/vw_bg_fg1"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
-        android:background="@color/btn_bg_press" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_bg_ts"
+        android:paddingStart="24dp"
+        android:paddingEnd="12dp">
+        <TextView android:id="@+id/panel_title"
+            style="@style/ReadingPanelTitle"
+            android:text="@string/reading_appearance"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:alpha="0.75"
-            android:text="@string/text_bg_style"
-            android:textSize="12sp" />
+            android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/tv_share_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_layout" />
-
-        <io.legado.app.ui.widget.checkbox.SmoothCheckBox
-            android:id="@+id/cb_share_layout"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="16dp" />
-
+        <TextView android:id="@+id/panel_done"
+            style="@style/ReadingPanelAction"
+            android:text="@string/reading_done" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_style"
+    <LinearLayout android:id="@+id/panel_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="12dp"
+        android:padding="4dp">
+        <TextView android:id="@+id/tab_type"
+            style="@style/ReadingPanelTab"
+            android:text="@string/reading_tab_type" />
+
+        <TextView android:id="@+id/tab_page"
+            style="@style/ReadingPanelTab"
+            android:text="@string/reading_tab_page" />
+
+        <TextView android:id="@+id/tab_theme"
+            style="@style/ReadingPanelTab"
+            android:text="@string/reading_tab_theme" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView android:id="@+id/panel_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipToPadding="false"
-        android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tool:listitem="@layout/item_read_style" />
+        android:fillViewport="false"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="24dp">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout android:id="@+id/section_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout android:id="@+id/tv_text_font"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="76dp"
+                    android:layout_marginBottom="12dp"
+                    android:padding="14dp"
+                    android:gravity="center_vertical">
+                    <ImageView android:id="@+id/tv_text_font_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_interface_setting"
+                        android:importantForAccessibility="no" />
 
+                    <LinearLayout android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/tv_text_font_title"
+                            style="@style/ReadingPanelText"
+                            android:text="@string/reading_current_font"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView android:id="@+id/tv_text_font_hint"
+                            style="@style/ReadingPanelCaption"
+                            android:text="@string/ui_font_hint"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <ImageView android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:importantForAccessibility="no"
+                        app:tint="@color/secondaryText" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="8dp">
+                    <io.legado.app.ui.book.read.config.TextFontWeightConverter android:id="@+id/text_font_weight_converter"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="4dp"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        app:radius="14dp"
+                        app:isBottomBackground="true" />
+
+                    <io.legado.app.ui.widget.text.StrokeTextView android:id="@+id/tv_text_indent"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="4dp"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:text="@string/text_indent"
+                        app:radius="14dp"
+                        app:isBottomBackground="true" />
+
+                    <io.legado.app.ui.book.read.config.ChineseConverter android:id="@+id/chinese_converter"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="4dp"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        app:radius="14dp"
+                        app:isBottomBackground="true" />
+                </LinearLayout>
+
+                <io.legado.app.ui.book.read.config.ReadSettingSlider android:id="@+id/dsb_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:max="45"
+                    app:title="@string/text_size" />
+
+                <io.legado.app.ui.book.read.config.ReadSettingSlider android:id="@+id/dsb_text_letter_spacing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:max="100"
+                    app:title="@string/text_letter_spacing" />
+
+                <io.legado.app.ui.book.read.config.ReadSettingSlider android:id="@+id/dsb_line_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:max="20"
+                    app:title="@string/line_size" />
+
+                <io.legado.app.ui.book.read.config.ReadSettingSlider android:id="@+id/dsb_paragraph_spacing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:max="20"
+                    app:title="@string/paragraph_size" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/section_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout android:id="@+id/tv_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="76dp"
+                    android:layout_marginBottom="12dp"
+                    android:padding="14dp"
+                    android:gravity="center_vertical">
+                    <ImageView android:id="@+id/tv_padding_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_cfg_other"
+                        android:importantForAccessibility="no" />
+
+                    <LinearLayout android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/tv_padding_title"
+                            style="@style/ReadingPanelText"
+                            android:text="@string/reading_margins"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView android:id="@+id/tv_padding_hint"
+                            style="@style/ReadingPanelCaption"
+                            android:text="@string/reading_margins_hint"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <ImageView android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:importantForAccessibility="no"
+                        app:tint="@color/secondaryText" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tv_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="76dp"
+                    android:layout_marginBottom="12dp"
+                    android:padding="14dp"
+                    android:gravity="center_vertical">
+                    <ImageView android:id="@+id/tv_tip_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_bottom_books_e"
+                        android:importantForAccessibility="no" />
+
+                    <LinearLayout android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/tv_tip_title"
+                            style="@style/ReadingPanelText"
+                            android:text="@string/reading_info"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView android:id="@+id/tv_tip_hint"
+                            style="@style/ReadingPanelCaption"
+                            android:text="@string/reading_info_hint"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <ImageView android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:importantForAccessibility="no"
+                        app:tint="@color/secondaryText" />
+                </LinearLayout>
+
+                <TextView android:id="@+id/tv_page_anim"
+                    style="@style/ReadingPanelText"
+                    android:text="@string/page_anim"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <RadioGroup android:id="@+id/rg_page_anim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <io.legado.app.lib.theme.view.ThemeRadioNoButton android:id="@+id/rb_anim0"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="2dp"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="@string/page_anim_cover"
+                        app:isBottomBackground="true" />
+
+                    <io.legado.app.lib.theme.view.ThemeRadioNoButton android:id="@+id/rb_anim1"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="2dp"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="@string/page_anim_slide"
+                        app:isBottomBackground="true" />
+
+                    <io.legado.app.lib.theme.view.ThemeRadioNoButton android:id="@+id/rb_simulation_anim"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="2dp"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="@string/page_anim_simulation"
+                        app:isBottomBackground="true" />
+
+                    <io.legado.app.lib.theme.view.ThemeRadioNoButton android:id="@+id/rb_scroll_anim"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="2dp"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="@string/page_anim_scroll"
+                        app:isBottomBackground="true" />
+
+                    <io.legado.app.lib.theme.view.ThemeRadioNoButton android:id="@+id/rb_no_anim"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="2dp"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="@string/page_anim_none"
+                        app:isBottomBackground="true" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/section_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <TextView android:id="@+id/tv_bg_ts"
+                    style="@style/ReadingPanelCaption"
+                    android:text="@string/reading_theme_hint"
+                    android:layout_marginBottom="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <LinearLayout android:id="@+id/share_layout_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:minHeight="72dp"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/tv_share_layout"
+                            style="@style/ReadingPanelText"
+                            android:text="@string/share_layout"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView android:id="@+id/share_layout_hint"
+                            style="@style/ReadingPanelCaption"
+                            android:text="@string/reading_shared_hint"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <io.legado.app.lib.theme.view.ThemeSwitch android:id="@+id/cb_share_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/share_layout" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

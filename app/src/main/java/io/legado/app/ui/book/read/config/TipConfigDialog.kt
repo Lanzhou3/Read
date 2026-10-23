@@ -2,8 +2,10 @@ package io.legado.app.ui.book.read.config
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.indices
+import androidx.core.view.isVisible
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import io.legado.app.R
 import io.legado.app.base.BaseDialogFragment
@@ -17,7 +19,6 @@ import io.legado.app.utils.getIndexById
 import io.legado.app.utils.hexString
 import io.legado.app.utils.observeEvent
 import io.legado.app.utils.postEvent
-import io.legado.app.utils.setLayout
 import io.legado.app.utils.viewbindingdelegate.viewBinding
 
 
@@ -30,12 +31,34 @@ class TipConfigDialog : BaseDialogFragment(R.layout.dialog_tip_config) {
 
     private val binding by viewBinding(DialogTipConfigBinding::bind)
 
+    private var selectedTab = 0
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("informationTab", selectedTab)
+    }
+
     override fun onStart() {
         super.onStart()
-        setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        ReadingPanelStyle.show(this)
     }
 
     override fun onFragmentCreated(view: View, savedInstanceState: Bundle?) {
+        ReadingPanelStyle.prepare(view) { dismissAllowingStateLoss() }
+        val tabs = listOf(binding.tabTitle, binding.tabHeader, binding.tabFooter, binding.tabColor)
+        val sections = listOf(binding.sectionTitle, binding.sectionHeader, binding.sectionFooter, binding.sectionColor)
+        fun selectTab(index: Int) {
+            selectedTab = index
+            ReadingPanelStyle.tabs(tabs, index)
+            sections.forEachIndexed { i, section -> section.isVisible = i == index }
+            binding.panelScroll.scrollTo(0, 0)
+        }
+        tabs.forEachIndexed { index, tab -> tab.setOnClickListener { selectTab(index) } }
+        selectTab(savedInstanceState?.getInt("informationTab") ?: 0)
+        binding.rgTitleMode.children.filterIsInstance<TextView>().forEach { ReadingPanelStyle.radio(it) }
+        listOf(binding.llHeaderShow, binding.llHeaderLeft, binding.llHeaderMiddle, binding.llHeaderRight,
+            binding.llFooterShow, binding.llFooterLeft, binding.llFooterMiddle, binding.llFooterRight,
+            binding.llTipColor, binding.llTipDividerColor).forEach { ReadingPanelStyle.action(it) }
         initView()
         initEvent()
         observeEvent<String>(EventBus.TIP_COLOR) {
@@ -49,6 +72,7 @@ class TipConfigDialog : BaseDialogFragment(R.layout.dialog_tip_config) {
             ReadBookConfig.titleMode = 0
         }
         binding.rgTitleMode.checkByIndex(ReadBookConfig.titleMode)
+        binding.dsbTitleSize.valueFormat = { (ReadBookConfig.textSize + it).toString() }
         binding.dsbTitleSize.progress = ReadBookConfig.titleSize
         binding.dsbTitleTop.progress = ReadBookConfig.titleTopSpacing
         binding.dsbTitleBottom.progress = ReadBookConfig.titleBottomSpacing

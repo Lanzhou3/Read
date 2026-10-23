@@ -1,185 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
+    <View android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/btn_bg_press" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:gravity="center_vertical"
-        android:padding="6dp">
-
-        <TextView
-            android:id="@+id/tv_name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/style_name"
-            android:textColor="@color/primaryText"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:textColor="@color/secondaryText"
-            tools:text="文字" />
-
-        <ImageView
-            android:id="@+id/iv_edit"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@string/edit"
-            android:src="@drawable/ic_edit"
-            app:tint="@color/secondaryText" />
-
-        <Space
+        android:paddingStart="24dp"
+        android:paddingEnd="12dp">
+        <TextView android:id="@+id/panel_title"
+            style="@style/ReadingPanelTitle"
+            android:text="@string/reading_tab_theme"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/tv_restore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/restore"
-            android:textColor="@color/primaryText" />
-
+        <TextView android:id="@+id/panel_done"
+            style="@style/ReadingPanelAction"
+            android:text="@string/reading_done" />
     </LinearLayout>
 
-    <io.legado.app.lib.theme.view.ThemeSwitch
-        android:id="@+id/sw_dark_status_icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:text="@string/dark_status_icon"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <io.legado.app.lib.theme.view.ThemeSwitch
-        android:id="@+id/sw_underline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:text="@string/text_underline"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="6dp">
-
-        <io.legado.app.ui.widget.text.StrokeTextView
-            android:id="@+id/tv_text_color"
-            android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false">
+        <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="5"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:padding="6dp"
-            android:singleLine="true"
-            android:text="@string/text_color"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            tools:ignore="HardcodedText" />
+            android:orientation="vertical">
+            <LinearLayout android:id="@+id/name_row"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:gravity="center_vertical">
+                <TextView android:id="@+id/tv_name_title"
+                    style="@style/ReadingPanelText"
+                    android:text="@string/style_name" />
 
-        <io.legado.app.ui.widget.text.StrokeTextView
-            android:id="@+id/tv_bg_color"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="5"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:padding="6dp"
-            android:singleLine="true"
-            android:text="@string/bg_color"
-            android:textSize="14sp"
-            app:isBottomBackground="true"
-            tools:ignore="HardcodedText" />
+                <TextView android:id="@+id/tv_name"
+                    style="@style/ReadingPanelCaption"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="12dp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
 
-        <ImageView
-            android:id="@+id/iv_import"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/import_str"
-            android:src="@drawable/ic_import"
-            android:tooltipText="@string/import_str"
-            tools:ignore="UnusedAttribute" />
+                <ImageView android:id="@+id/iv_edit"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:padding="13dp"
+                    android:contentDescription="@string/edit"
+                    android:src="@drawable/ic_edit" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_export"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/import_str"
-            android:src="@drawable/ic_export"
-            android:tooltipText="@string/export_str"
-            tools:ignore="UnusedAttribute" />
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <TextView android:id="@+id/tv_text_color"
+                    style="@style/ReadingPanelAction"
+                    android:text="@string/text_color"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp" />
 
-        <ImageView
-            android:id="@+id/iv_delete"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/delete"
-            android:src="@drawable/ic_clear_all"
-            android:tooltipText="@string/delete"
-            tools:ignore="UnusedAttribute" />
+                <TextView android:id="@+id/tv_bg_color"
+                    style="@style/ReadingPanelAction"
+                    android:text="@string/bg_color"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <TextView android:id="@+id/tv_bg_alpha"
+                style="@style/ReadingPanelText"
+                android:text="@string/bg_alpha"
+                android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/tv_bg_alpha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:text="@string/bg_alpha" />
+            <io.legado.app.lib.theme.view.ThemeSeekBar android:id="@+id/sb_bg_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:max="100"
+                android:contentDescription="@string/bg_alpha" />
 
-    <io.legado.app.lib.theme.view.ThemeSeekBar
-        android:id="@+id/sb_bg_alpha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:padding="6dp"
-        tools:ignore="UnusedAttribute" />
+            <TextView android:id="@+id/tv_bg_image"
+                style="@style/ReadingPanelText"
+                android:text="@string/bg_image"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp" />
 
-    <TextView
-        android:id="@+id/tv_bg_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:text="@string/bg_image" />
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="112dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:padding="6dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_bg_image" />
+            <io.legado.app.lib.theme.view.ThemeSwitch android:id="@+id/sw_dark_status_icon"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:textSize="14sp"
+                android:text="@string/dark_status_icon" />
 
+            <io.legado.app.lib.theme.view.ThemeSwitch android:id="@+id/sw_underline"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:textSize="14sp"
+                android:text="@string/text_underline" />
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+                <TextView android:id="@+id/tv_restore"
+                    style="@style/ReadingPanelAction"
+                    android:text="@string/restore"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp" />
+
+                <ImageView android:id="@+id/iv_import"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:padding="13dp"
+                    android:contentDescription="@string/import_str"
+                    android:src="@drawable/ic_import" />
+
+                <ImageView android:id="@+id/iv_export"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:padding="13dp"
+                    android:contentDescription="@string/export_str"
+                    android:src="@drawable/ic_export" />
+
+                <ImageView android:id="@+id/iv_delete"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:padding="13dp"
+                    android:contentDescription="@string/delete"
+                    android:src="@drawable/ic_clear_all" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
