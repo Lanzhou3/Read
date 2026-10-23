@@ -10,6 +10,7 @@ import io.legado.app.databinding.ItemBookshelfListBinding
 import io.legado.app.databinding.ItemBookshelfListGroupBinding
 import io.legado.app.help.book.isLocal
 import io.legado.app.help.config.AppConfig
+import io.legado.app.ui.main.bookshelf.updateMetadataVisibility
 import io.legado.app.utils.gone
 import io.legado.app.utils.invisible
 import io.legado.app.utils.visible
@@ -85,6 +86,7 @@ class BooksAdapterList(context: Context, callBack: CallBack) :
                     }
                 }
             }
+            updateMetadataVisibility()
         }
 
         fun registerListener(item: Any) {

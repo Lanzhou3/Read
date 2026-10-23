@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="GlassSurfaceView">
+        <attr name="glassCornerRadius" format="dimension" />
+        <attr name="glassElevation" format="dimension" />
+        <attr name="glassEdgeOpacity" format="float" />
+    </declare-styleable>
 
     <attr name="radius" format="dimension" />
     <attr name="isBottomBackground" format="boolean" />

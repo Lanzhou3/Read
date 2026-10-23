@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="glass_effects">Liquid Glass</string>
+    <string name="glass_effects_summary">Refração e dispersão no Android 13+; desfoque no Android 12. Superfícies opacas em tinta eletrônica ou economia de energia.</string>
+    <string name="glass_strength">Intensidade do vidro</string>
+    <string name="glass_strength_summary">Aumenta a profundidade, a dispersão e a tonalidade.</string>
+    <string name="reading_progress_label">Progresso da leitura</string>
+</resources>

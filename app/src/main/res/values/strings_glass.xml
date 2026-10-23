@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="glass_effects">Liquid Glass</string>
+    <string name="glass_effects_summary">Refraction and dispersion on Android 13+; background blur on Android 12. Solid surfaces in E Ink or power saving.</string>
+    <string name="glass_strength">Glass intensity</string>
+    <string name="glass_strength_summary">Higher values increase lens depth, dispersion and tint.</string>
+    <string name="reading_progress_label">Reading progress</string>
+</resources>

@@ -1,11 +1,15 @@
-<vector android:autoMirrored="true"
-    android:height="24dp"
-    android:tint="#000000"
-    android:viewportHeight="24"
-    android:viewportWidth="24"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <path
-        android:fillColor="@android:color/white"
-        android:pathData="M17,7l-1.41,1.41L18.17,11H8v2h10.17l-2.58,2.58L17,17l5,-5zM4,5h8V3H4c-1.1,0 -2,0.9 -2,2v14c0,1.1 0.9,2 2,2h8v-2H4V5z" />
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:autoMirrored="true"
+    android:tint="#000000">
+    <group android:translateX="-0" android:translateY="960">
+        <path
+            android:fillColor="@android:color/white"
+            android:pathData="M 200 -120 q -33 0 -56.5 -23.5 T 120 -200 v -560 q 0 -33 23.5 -56.5 T 200 -840 h 240 q 17 0 28.5 11.5 T 480 -800 q 0 17 -11.5 28.5 T 440 -760 H 200 v 560 h 240 q 17 0 28.5 11.5 T 480 -160 q 0 17 -11.5 28.5 T 440 -120 H 200 Z m 487 -320 H 400 q -17 0 -28.5 -11.5 T 360 -480 q 0 -17 11.5 -28.5 T 400 -520 h 287 l -75 -75 q -11 -11 -11 -27 t 11 -28 q 11 -12 28 -12.5 t 29 11.5 l 143 143 q 12 12 12 28 t -12 28 L 669 -309 q -12 12 -28.5 11.5 T 612 -310 q -11 -12 -10.5 -28.5 T 613 -366 l 74 -74 Z" />
+    </group>
 </vector>

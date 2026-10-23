@@ -1,6 +1,8 @@
 package io.legado.app.ui.config
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -100,8 +102,39 @@ class ThemeListDialog : BaseDialogFragment(R.layout.dialog_recycler_view),
         ) {
             binding.apply {
                 tvName.text = item.themeName
+                tvMode.setText(if (item.isNightTheme) R.string.night_theme else R.string.day)
+                val background = paletteColor(item.backgroundColor, item.isNightTheme)
+                val accent = paletteColor(item.accentColor, item.isNightTheme)
+                val text = if (androidx.core.graphics.ColorUtils.calculateContrast(accent, background) >= 4.5) {
+                    accent
+                } else if (androidx.core.graphics.ColorUtils.calculateLuminance(background) > 0.5) {
+                    Color.BLACK
+                } else Color.WHITE
+                tvPalettePreview.setTextColor(text)
+                tvPalettePreview.background = GradientDrawable().apply {
+                    cornerRadius = 12f.dpToPx()
+                    setColor(background)
+                    setStroke(1.dpToPx(), if (item.isNightTheme) 0x33FFFFFF else 0x18000000)
+                }
+                listOf(
+                    swatchBackground to background,
+                    swatchPrimary to paletteColor(item.primaryColor, item.isNightTheme),
+                    swatchSurface to paletteColor(item.bottomBackground, item.isNightTheme),
+                    swatchAccent to accent
+                ).forEach { (view, color) ->
+                    view.background = GradientDrawable().apply {
+                        shape = GradientDrawable.OVAL
+                        setColor(color)
+                        setStroke(1.dpToPx(), if (item.isNightTheme) 0x33FFFFFF else 0x18000000)
+                    }
+                }
             }
         }
+
+        private fun paletteColor(value: String, night: Boolean): Int =
+            runCatching {
+                androidx.core.graphics.ColorUtils.setAlphaComponent(Color.parseColor(value), 255)
+            }.getOrDefault(if (night) Color.BLACK else Color.WHITE)
 
         override fun registerListener(holder: ItemViewHolder, binding: ItemThemeConfigBinding) {
             binding.apply {

@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<io.legado.app.ui.widget.glass.GlassSurfaceView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
+    android:id="@+id/title_glass"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.AppBarOverlay.Dark"
-    app:titleTextAppearance="@style/ToolbarTitle"
-    app:popupTheme="@style/AppTheme.PopupOverlay" />
+    android:layout_marginStart="@dimen/glass_toolbar_margin"
+    android:layout_marginEnd="@dimen/glass_toolbar_margin"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:theme="@style/AppTheme.AppBarOverlay.Dark"
+        app:titleTextAppearance="@style/ToolbarTitle"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+</io.legado.app.ui.widget.glass.GlassSurfaceView>

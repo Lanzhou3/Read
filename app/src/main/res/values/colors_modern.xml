@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Explicit day/night tokens also keep theme export and preference defaults in sync. -->
+    <color name="modern_day_primary">#F0F7FF</color>
+    <color name="modern_day_accent">#0866F5</color>
+    <color name="modern_day_background">#F0F7FF</color>
+    <color name="modern_day_surface">#FFFFFF</color>
+    <color name="modern_day_text">#102A43</color>
+    <color name="modern_day_secondary">#526B83</color>
+    <color name="modern_night_primary">#112541</color>
+    <color name="modern_night_accent">#67DFFF</color>
+    <color name="modern_night_background">#08172B</color>
+    <color name="modern_night_surface">#112541</color>
+    <color name="modern_night_text">#EDF7FF</color>
+    <color name="modern_night_secondary">#A9C3DC</color>
+</resources>

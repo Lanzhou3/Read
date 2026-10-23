@@ -1,26 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager_main"
+    <io.legado.app.ui.widget.glass.GlassBackdropTarget
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </io.legado.app.ui.widget.glass.GlassBackdropTarget>
+
+    <View
+        android:id="@+id/status_bar_scrim"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:layout_gravity="top"
+        android:importantForAccessibility="no" />
 
-    <io.legado.app.lib.theme.view.ThemeBottomNavigationVIew
-        android:id="@+id/bottom_navigation_view"
+    <io.legado.app.ui.widget.glass.GlassSurfaceView
+        android:id="@+id/bottom_glass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:minHeight="50dp"
-        app:itemActiveIndicatorStyle="@color/transparent"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/main_bnv" />
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/glass_navigation_margin"
+        android:layout_marginEnd="@dimen/glass_navigation_margin"
+        android:layout_marginBottom="@dimen/glass_navigation_gap"
+        app:glassCornerRadius="@dimen/glass_navigation_radius"
+        app:glassElevation="1dp"
+        app:glassEdgeOpacity="0.6">
 
-</LinearLayout>
+        <io.legado.app.lib.theme.view.ThemeBottomNavigationVIew
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:minHeight="@dimen/glass_navigation_height"
+            app:itemIconSize="24dp"
+            app:itemPaddingTop="8dp"
+            app:itemPaddingBottom="8dp"
+            app:itemTextAppearanceActive="@style/GlassNavigationLabel"
+            app:itemTextAppearanceInactive="@style/GlassNavigationLabel"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/main_bnv" />
+
+    </io.legado.app.ui.widget.glass.GlassSurfaceView>
+
+</FrameLayout>

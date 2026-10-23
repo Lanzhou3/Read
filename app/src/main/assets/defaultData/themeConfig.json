@@ -1,11 +1,67 @@
 [
   {
-    "themeName": "默认",
+    "themeName": "现代·薄荷汽水",
     "isNightTheme": false,
-    "primaryColor": "#795548",
-    "accentColor": "#E53935",
-    "backgroundColor": "#F5F5F5",
-    "bottomBackground": "#EEEEEE"
+    "primaryColor": "#CFF5E5",
+    "accentColor": "#007D68",
+    "backgroundColor": "#F0FCF6",
+    "bottomBackground": "#DFF8EE"
+  },
+  {
+    "themeName": "现代·蜜桃橘子",
+    "isNightTheme": false,
+    "primaryColor": "#FFDBC5",
+    "accentColor": "#C04715",
+    "backgroundColor": "#FFF5EC",
+    "bottomBackground": "#FFE8D8"
+  },
+  {
+    "themeName": "现代·莓果气泡",
+    "isNightTheme": false,
+    "primaryColor": "#FAD5E9",
+    "accentColor": "#B62468",
+    "backgroundColor": "#FFF1F8",
+    "bottomBackground": "#FCE1EF"
+  },
+  {
+    "themeName": "现代·鸢尾电光",
+    "isNightTheme": false,
+    "primaryColor": "#DED4FF",
+    "accentColor": "#6840D5",
+    "backgroundColor": "#F6F2FF",
+    "bottomBackground": "#EBE3FF"
+  },
+  {
+    "themeName": "现代·霓虹莓夜",
+    "isNightTheme": true,
+    "primaryColor": "#2C1A39",
+    "accentColor": "#FF8FC7",
+    "backgroundColor": "#180F23",
+    "bottomBackground": "#30203E"
+  },
+  {
+    "themeName": "现代·极光薄荷夜",
+    "isNightTheme": true,
+    "primaryColor": "#103337",
+    "accentColor": "#65F0CF",
+    "backgroundColor": "#091C20",
+    "bottomBackground": "#163A3F"
+  },
+  {
+    "themeName": "现代·晴空",
+    "isNightTheme": false,
+    "primaryColor": "#F0F7FF",
+    "accentColor": "#0866F5",
+    "backgroundColor": "#F0F7FF",
+    "bottomBackground": "#FFFFFF"
+  },
+  {
+    "themeName": "现代·星光",
+    "isNightTheme": true,
+    "primaryColor": "#112541",
+    "accentColor": "#67DFFF",
+    "backgroundColor": "#08172B",
+    "bottomBackground": "#112541"
   },
   {
     "themeName": "典雅蓝",

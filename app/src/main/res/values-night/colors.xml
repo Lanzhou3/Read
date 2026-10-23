@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">@color/md_blue_grey_600</color>
-    <color name="primaryDark">@color/md_blue_grey_700</color>
-    <color name="accent">@color/md_deep_orange_800</color>
+    <color name="primary">@color/modern_night_primary</color>
+    <color name="primaryDark">@color/modern_night_primary</color>
+    <color name="accent">@color/modern_night_accent</color>
 
     <color name="disabled">@color/md_dark_disabled</color>
 
-    <color name="background">@color/md_grey_900</color>
-    <color name="background_card">@color/md_grey_850</color>
-    <color name="background_menu">@color/md_grey_800</color>
+    <color name="background">@color/modern_night_background</color>
+    <color name="background_card">@color/modern_night_surface</color>
+    <color name="background_menu">@color/modern_night_surface</color>
     <color name="background_prefs">#10303030</color>
 
     <color name="night_mask">#69000000</color>
@@ -29,9 +29,9 @@
     <color name="tv_btn_normal_black">#737373</color>
     <color name="tv_btn_press_black">#565656</color>
 
-    <color name="primaryText">#ffffffff</color>
-    <color name="secondaryText">#b3ffffff</color>
-    <color name="tv_text_summary">#B3B3B3</color>
+    <color name="primaryText">@color/modern_night_text</color>
+    <color name="secondaryText">@color/modern_night_secondary</color>
+    <color name="tv_text_summary">@color/modern_night_secondary</color>
     <color name="menu_color_default">#b7b7b7</color>
 
 

@@ -3,13 +3,19 @@
 package io.legado.app.ui.main
 
 import android.os.Bundle
+import android.graphics.Color
 import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.view.get
 import androidx.core.view.postDelayed
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -31,8 +37,10 @@ import io.legado.app.help.config.LocalConfig
 import io.legado.app.help.coroutine.Coroutine
 import io.legado.app.help.storage.Backup
 import io.legado.app.lib.dialogs.alert
-import io.legado.app.lib.theme.elevation
 import io.legado.app.lib.theme.primaryColor
+import io.legado.app.lib.theme.backgroundColor
+import io.legado.app.lib.theme.bottomBackground
+import io.legado.app.utils.ColorUtils
 import io.legado.app.service.BaseReadAloudService
 import io.legado.app.ui.about.CrashLogsDialog
 import io.legado.app.ui.main.bookshelf.BaseBookshelfFragment
@@ -44,7 +52,6 @@ import io.legado.app.ui.main.rss.RssFragment
 import io.legado.app.ui.widget.dialog.TextDialog
 import io.legado.app.ui.widget.text.BadgeView
 import io.legado.app.utils.isCreated
-import io.legado.app.utils.navigationBarHeight
 import io.legado.app.utils.observeEvent
 import io.legado.app.utils.setEdgeEffectColor
 import io.legado.app.utils.setOnApplyWindowInsetsListenerCompat
@@ -55,7 +62,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import splitties.views.bottomPadding
 import kotlin.coroutines.resume
 
 /**
@@ -181,16 +187,41 @@ class MainActivity : VMBaseActivity<ActivityMainBinding, MainViewModel>(),
         viewPagerMain.offscreenPageLimit = 3
         viewPagerMain.adapter = adapter
         viewPagerMain.addOnPageChangeListener(PageChangeCallback())
-        bottomNavigationView.elevation = elevation
+        mainContent.background = window.decorView.background?.constantState?.newDrawable()?.mutate()
+        statusBarScrim.setBackgroundColor(ColorUtils.withAlpha(backgroundColor, 0.96f))
+        bottomGlass.bindBackdrop(mainContent)
         bottomNavigationView.setOnNavigationItemSelectedListener(this@MainActivity)
         bottomNavigationView.setOnNavigationItemReselectedListener(this@MainActivity)
-        if (AppConfig.isEInkMode) {
-            bottomNavigationView.setBackgroundResource(R.drawable.bg_eink_border_top)
+        root.setOnApplyWindowInsetsListenerCompat { view, windowInsets ->
+            val bars = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            val keyboardVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
+            val keyboardBottom = if (keyboardVisible) {
+                windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            } else 0
+            view.setPadding(bars.left, 0, bars.right, keyboardBottom)
+            statusBarScrim.updateLayoutParams<ViewGroup.LayoutParams> { height = bars.top }
+            bottomGlass.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = bars.bottom + resources.getDimensionPixelSize(R.dimen.glass_navigation_gap)
+            }
+            bottomGlass.visibility = if (keyboardVisible) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+            windowInsets
         }
-        bottomNavigationView.setOnApplyWindowInsetsListenerCompat { view, windowInsets ->
-            val height = windowInsets.navigationBarHeight
-            view.bottomPadding = height
-            windowInsets.inset(0, 0, 0, height)
+    }
+
+    override fun setupSystemBar() {
+        super.setupSystemBar()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = if (AppConfig.immNavigationBar) Color.TRANSPARENT else bottomBackground
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = ColorUtils.isColorLight(backgroundColor)
+            isAppearanceLightNavigationBars = ColorUtils.isColorLight(backgroundColor)
         }
     }
 

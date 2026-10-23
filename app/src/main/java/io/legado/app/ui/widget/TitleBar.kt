@@ -3,6 +3,7 @@ package io.legado.app.ui.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.graphics.Color
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -21,6 +22,8 @@ import io.legado.app.R
 import io.legado.app.help.config.AppConfig
 import io.legado.app.lib.theme.elevation
 import io.legado.app.lib.theme.primaryColor
+import io.legado.app.ui.widget.glass.GlassSurfaceView
+import eightbitlab.com.blurview.BlurTarget
 import io.legado.app.utils.activity
 import io.legado.app.utils.setOnApplyWindowInsetsListenerCompat
 import splitties.views.bottomPadding
@@ -184,7 +187,7 @@ class TitleBar @JvmOverloads constructor(
             }
 
             stateListAnimator = null
-            elevation = context.elevation
+            elevation = if (AppConfig.isEInkMode) 0f else if (AppConfig.elevation < 0) 0.1f else context.elevation
         }
         a.recycle()
     }
@@ -238,11 +241,19 @@ class TitleBar @JvmOverloads constructor(
     }
 
     override fun setBackgroundColor(color: Int) {
+        findViewById<GlassSurfaceView>(R.id.title_glass)?.setSurfaceColor(color)
         if (color.alpha < 255) {
             //这里不能改为0f,改为0f在横屏模式下文字和图标颜色会变
             elevation = 0.1f
         }
         super.setBackgroundColor(color)
+    }
+
+    fun bindGlassBackdrop(target: BlurTarget) {
+        if (AppConfig.isEInkMode) return
+        findViewById<GlassSurfaceView>(R.id.title_glass)?.bindBackdrop(target)
+        super.setBackgroundColor(Color.TRANSPARENT)
+        elevation = 0.1f
     }
 
     override fun setBackground(background: Drawable?) {

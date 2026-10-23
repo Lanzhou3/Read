@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="glass_navigation_margin">16dp</dimen>
+    <dimen name="glass_navigation_gap">12dp</dimen>
+    <dimen name="glass_navigation_height">64dp</dimen>
+    <dimen name="glass_navigation_radius">32dp</dimen>
+    <dimen name="glass_toolbar_radius">24dp</dimen>
+    <dimen name="glass_toolbar_margin">12dp</dimen>
+    <dimen name="glass_content_gap">12dp</dimen>
+</resources>

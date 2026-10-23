@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="1024"
-    android:viewportHeight="1024">
-
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M512 720.457143v-109.714286H201.216v109.714286H512z m0 204.8v-109.714286H201.216v109.714286H512zM324.754286 445.147429v40.886857h109.714285V429.348571a54.857143 54.857143 0 0 0-8.411428-29.110857L273.846857 157.257143h497.444572l-152.137143 242.980571a54.857143 54.857143 0 0 0-8.411429 29.110857v542.72h109.714286V445.074286l196.461714-313.636572A54.857143 54.857143 0 0 0 870.4 47.542857H174.811429a54.857143 54.857143 0 0 0-46.518858 83.968l196.388572 313.636572z" />
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <group android:translateX="-0" android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M 200 -200 h 80 q 17 0 28.5 11.5 T 320 -160 q 0 17 -11.5 28.5 T 280 -120 H 160 q -17 0 -28.5 -11.5 T 120 -160 v -120 q 0 -17 11.5 -28.5 T 160 -320 q 17 0 28.5 11.5 T 200 -280 v 80 Z m 560 0 v -80 q 0 -17 11.5 -28.5 T 800 -320 q 17 0 28.5 11.5 T 840 -280 v 120 q 0 17 -11.5 28.5 T 800 -120 H 680 q -17 0 -28.5 -11.5 T 640 -160 q 0 -17 11.5 -28.5 T 680 -200 h 80 Z M 200 -760 v 80 q 0 17 -11.5 28.5 T 160 -640 q -17 0 -28.5 -11.5 T 120 -680 v -120 q 0 -17 11.5 -28.5 T 160 -840 h 120 q 17 0 28.5 11.5 T 320 -800 q 0 17 -11.5 28.5 T 280 -760 h -80 Z m 560 0 h -80 q -17 0 -28.5 -11.5 T 640 -800 q 0 -17 11.5 -28.5 T 680 -840 h 120 q 17 0 28.5 11.5 T 840 -800 v 120 q 0 17 -11.5 28.5 T 800 -640 q -17 0 -28.5 -11.5 T 760 -680 v -80 Z" />
+    </group>
 </vector>

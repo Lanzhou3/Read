@@ -80,7 +80,7 @@
                                 android:layout_height="160dp"
                                 android:contentDescription="@string/img_cover"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/image_cover_default" />
+                                android:src="@drawable/image_cover_modern" />
 
                         </androidx.cardview.widget.CardView>
 

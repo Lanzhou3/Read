@@ -1,9 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
-    <path
-        android:fillColor="#000000"
-        android:pathData="M20,8h-2.81c-0.45,-0.78 -1.07,-1.45 -1.82,-1.96L17,4.41 15.59,3l-2.17,2.17C12.96,5.06 12.49,5 12,5c-0.49,0 -0.96,0.06 -1.41,0.17L8.41,3 7,4.41l1.62,1.63C7.88,6.55 7.26,7.22 6.81,8L4,8v2h2.09c-0.05,0.33 -0.09,0.66 -0.09,1v1L4,12v2h2v1c0,0.34 0.04,0.67 0.09,1L4,16v2h2.81c1.04,1.79 2.97,3 5.19,3s4.15,-1.21 5.19,-3L20,18v-2h-2.09c0.05,-0.33 0.09,-0.66 0.09,-1v-1h2v-2h-2v-1c0,-0.34 -0.04,-0.67 -0.09,-1L20,10L20,8zM14,16h-4v-2h4v2zM14,12h-4v-2h4v2z"/>
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <group android:translateX="-0" android:translateY="960">
+        <path
+            android:fillColor="#000000"
+            android:pathData="M 480 -120 q -65 0 -120.5 -32 T 272 -240 h -72 q -17 0 -28.5 -11.5 T 160 -280 q 0 -17 11.5 -28.5 T 200 -320 h 44 q -3 -20 -3.5 -40 t -0.5 -40 h -40 q -17 0 -28.5 -11.5 T 160 -440 q 0 -17 11.5 -28.5 T 200 -480 h 40 q 0 -20 0.5 -40 t 3.5 -40 h -44 q -17 0 -28.5 -11.5 T 160 -600 q 0 -17 11.5 -28.5 T 200 -640 h 72 q 14 -23 31.5 -43 t 40.5 -35 l -37 -38 q -11 -11 -11 -27.5 t 12 -28.5 q 11 -11 28 -11 t 28 11 l 58 58 q 28 -9 57 -9 t 57 9 l 60 -59 q 11 -11 27.5 -11 t 28.5 12 q 11 11 11 28 t -11 28 l -38 38 q 23 15 41.5 34.5 T 688 -640 h 72 q 17 0 28.5 11.5 T 800 -600 q 0 17 -11.5 28.5 T 760 -560 h -44 q 3 20 3.5 40 t 0.5 40 h 40 q 17 0 28.5 11.5 T 800 -440 q 0 17 -11.5 28.5 T 760 -400 h -40 q 0 20 -0.5 40 t -3.5 40 h 44 q 17 0 28.5 11.5 T 800 -280 q 0 17 -11.5 28.5 T 760 -240 h -72 q -32 56 -87.5 88 T 480 -120 Z m -40 -200 h 80 q 17 0 28.5 -11.5 T 560 -360 q 0 -17 -11.5 -28.5 T 520 -400 h -80 q -17 0 -28.5 11.5 T 400 -360 q 0 17 11.5 28.5 T 440 -320 Z m 0 -160 h 80 q 17 0 28.5 -11.5 T 560 -520 q 0 -17 -11.5 -28.5 T 520 -560 h -80 q -17 0 -28.5 11.5 T 400 -520 q 0 17 11.5 28.5 T 440 -480 Z" />
+    </group>
 </vector>

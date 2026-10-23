@@ -1,5 +1,14 @@
-<vector android:height="24dp" android:tint="#000000"
-    android:viewportHeight="24" android:viewportWidth="24"
-    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="@android:color/white" android:pathData="M3,18h6v-2L3,16v2zM3,6v2h18L21,6L3,6zM3,13h12v-2L3,11v2z"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="#000000">
+    <group android:translateX="-0" android:translateY="960">
+        <path
+            android:fillColor="@android:color/white"
+            android:pathData="M 160 -240 q -17 0 -28.5 -11.5 T 120 -280 q 0 -17 11.5 -28.5 T 160 -320 h 160 q 17 0 28.5 11.5 T 360 -280 q 0 17 -11.5 28.5 T 320 -240 H 160 Z m 0 -200 q -17 0 -28.5 -11.5 T 120 -480 q 0 -17 11.5 -28.5 T 160 -520 h 400 q 17 0 28.5 11.5 T 600 -480 q 0 17 -11.5 28.5 T 560 -440 H 160 Z m 0 -200 q -17 0 -28.5 -11.5 T 120 -680 q 0 -17 11.5 -28.5 T 160 -720 h 640 q 17 0 28.5 11.5 T 840 -680 q 0 17 -11.5 28.5 T 800 -640 H 160 Z" />
+    </group>
 </vector>

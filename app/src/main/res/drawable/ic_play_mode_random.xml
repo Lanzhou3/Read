@@ -1,15 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
-    <path
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <group android:translateX="-0" android:translateY="960">
+        <path
             android:fillColor="#FF000000"
-            android:pathData="M19.207,4.293a1,1 0,1,0 -1.414,1.414l0.801,0.802c-3.809,0.161 -6.169,2.59 -8.226,4.706l-0.085,0.088C8.057,13.593 6.147,15.5 3,15.5a1,1 0,1,0 0,2c4.05,0 6.503,-2.525 8.632,-4.715l0.085,-0.088c2.124,-2.184 3.96,-4.02 6.857,-4.185l-0.781,0.78a1,1 0,0,0 1.414,1.415l2.5,-2.5a1,1 0,0,0 0,-1.414" />
-    <path
-            android:fillColor="#FF000000"
-            android:pathData="M3,6.5c3.229,0 5.443,1.605 7.287,3.366q-0.295,0.3 -0.574,0.588l-0.147,0.152q-0.349,0.36 -0.68,0.693C7.186,9.68 5.476,8.5 3,8.5a1,1 0,1,1 0,-2" />
-    <path
-            android:fillColor="#FF000000"
-            android:pathData="M18.791,17.584c-3.01,-0.128 -5.115,-1.671 -6.881,-3.357q0.295,-0.3 0.574,-0.589l0.147,-0.151q0.349,-0.36 0.68,-0.693c1.601,1.524 3.21,2.66 5.46,2.787l-0.781,-0.78a1,1 0,0,1 1.414,-1.415l2.5,2.5a1,1 0,0,1 0,1.414l-2.5,2.5a1,1 0,0,1 -1.414,-1.414" />
+            android:pathData="M 600 -160 q -17 0 -28.5 -11.5 T 560 -200 q 0 -17 11.5 -28.5 T 600 -240 h 64 l -99 -99 q -12 -12 -11.5 -28.5 T 566 -396 q 12 -12 28.5 -12 t 28.5 12 l 97 98 v -62 q 0 -17 11.5 -28.5 T 760 -400 q 17 0 28.5 11.5 T 800 -360 v 160 q 0 17 -11.5 28.5 T 760 -160 H 600 Z m -428 -12 q -11 -11 -11 -28 t 11 -28 l 492 -492 h -64 q -17 0 -28.5 -11.5 T 560 -760 q 0 -17 11.5 -28.5 T 600 -800 h 160 q 17 0 28.5 11.5 T 800 -760 v 160 q 0 17 -11.5 28.5 T 760 -560 q -17 0 -28.5 -11.5 T 720 -600 v -64 L 228 -172 q -11 11 -28 11 t -28 -11 Z m -1 -560 q -11 -11 -11 -28 t 11 -28 q 11 -11 27.5 -11 t 28.5 11 l 168 167 q 11 11 11.5 27.5 T 395 -565 q -11 11 -28 11 t -28 -11 L 171 -732 Z" />
+    </group>
 </vector>

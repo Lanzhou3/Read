@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="glass_effects">Liquid Glass</string>
+    <string name="glass_effects_summary">Khúc xạ và tán sắc trên Android 13+; làm mờ nền trên Android 12. Nền đặc khi dùng mực điện tử hoặc tiết kiệm pin.</string>
+    <string name="glass_strength">Cường độ kính</string>
+    <string name="glass_strength_summary">Tăng độ sâu thấu kính, tán sắc và màu phủ.</string>
+    <string name="reading_progress_label">Tiến độ đọc</string>
+</resources>

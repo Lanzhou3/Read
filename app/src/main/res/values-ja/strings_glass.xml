@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="glass_effects">Liquid Glass</string>
+    <string name="glass_effects_summary">Android 13 以降で背景の屈折・色分散、Android 12 でぼかしを使用。電子ペーパー・省電力時は不透明表示。</string>
+    <string name="glass_strength">ガラス効果の強さ</string>
+    <string name="glass_strength_summary">レンズの深さ、色分散と色の濃さを調整します。</string>
+    <string name="reading_progress_label">読書の進行状況</string>
+</resources>

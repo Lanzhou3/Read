@@ -1,9 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
-    <path
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <group android:translateX="-0" android:translateY="960">
+        <path
             android:fillColor="#FF000000"
-            android:pathData="M2,20h20v-4L2,16v4zM4,17h2v2L4,19v-2zM2,4v4h20L22,4L2,4zM6,7L4,7L4,5h2v2zM2,14h20v-4L2,10v4zM4,11h2v2L4,13v-2z"/>
+            android:pathData="M 200 -160 q -33 0 -56.5 -23.5 T 120 -240 q 0 -33 23.5 -56.5 T 200 -320 h 560 q 33 0 56.5 23.5 T 840 -240 q 0 33 -23.5 56.5 T 760 -160 H 200 Z m 0 -480 q -33 0 -56.5 -23.5 T 120 -720 q 0 -33 23.5 -56.5 T 200 -800 h 560 q 33 0 56.5 23.5 T 840 -720 q 0 33 -23.5 56.5 T 760 -640 H 200 Z m 0 240 q -33 0 -56.5 -23.5 T 120 -480 q 0 -33 23.5 -56.5 T 200 -560 h 560 q 33 0 56.5 23.5 T 840 -480 q 0 33 -23.5 56.5 T 760 -400 H 200 Z m 40 -280 q 17 0 28.5 -11.5 T 280 -720 q 0 -17 -11.5 -28.5 T 240 -760 q -17 0 -28.5 11.5 T 200 -720 q 0 17 11.5 28.5 T 240 -680 Z m 0 240 q 17 0 28.5 -11.5 T 280 -480 q 0 -17 -11.5 -28.5 T 240 -520 q -17 0 -28.5 11.5 T 200 -480 q 0 17 11.5 28.5 T 240 -440 Z m 0 240 q 17 0 28.5 -11.5 T 280 -240 q 0 -17 -11.5 -28.5 T 240 -280 q -17 0 -28.5 11.5 T 200 -240 q 0 17 11.5 28.5 T 240 -200 Z" />
+    </group>
 </vector>

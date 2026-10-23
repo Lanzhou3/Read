@@ -141,6 +141,8 @@ class ThemeConfigFragment : PreferenceFragment(),
             PreferKey.launcherIcon -> LauncherIconHelp.changeIcon(getPrefString(key))
             PreferKey.transparentStatusBar -> recreateActivities()
             PreferKey.immNavigationBar -> recreateActivities()
+            PreferKey.glassEffects,
+            PreferKey.glassStrength -> recreateActivities()
             PreferKey.cPrimary,
             PreferKey.cAccent,
             PreferKey.cBackground,
@@ -166,6 +168,13 @@ class ThemeConfigFragment : PreferenceFragment(),
     @SuppressLint("PrivateResource")
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (val key = preference.key) {
+            PreferKey.glassStrength -> NumberPickerDialog(requireContext())
+                .setTitle(getString(R.string.glass_strength))
+                .setMinValue(0)
+                .setMaxValue(100)
+                .setValue(getPrefInt(PreferKey.glassStrength, 70))
+                .show { putPrefInt(PreferKey.glassStrength, it) }
+
             PreferKey.barElevation -> NumberPickerDialog(requireContext())
                 .setTitle(getString(R.string.bar_elevation))
                 .setMaxValue(32)

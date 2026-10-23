@@ -1,9 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Material Symbols Rounded; Apache-2.0. See assets/licenses/material-symbols.txt. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="64dp"
     android:height="64dp"
-    android:viewportWidth="1024"
-    android:viewportHeight="1024">
-  <path
-      android:pathData="M512,685.25l-278.62,-278.62 45.25,-45.25L512,594.75l233.38,-233.38 45.25,45.25z"
-      android:fillColor="#181818"/>
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <group android:translateX="-0" android:translateY="960">
+        <path
+            android:fillColor="#181818"
+            android:pathData="M 440 -313 v -447 q 0 -17 11.5 -28.5 T 480 -800 q 17 0 28.5 11.5 T 520 -760 v 447 l 196 -196 q 12 -12 28 -11.5 t 28 12.5 q 11 12 11.5 28 T 772 -452 L 508 -188 q -6 6 -13 8.5 t -15 2.5 q -8 0 -15 -2.5 t -13 -8.5 L 188 -452 q -11 -11 -11 -27.5 t 11 -28.5 q 12 -12 28.5 -12 t 28.5 12 l 195 195 Z" />
+    </group>
 </vector>

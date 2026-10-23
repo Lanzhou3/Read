@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import io.legado.app.constant.AppPattern
+import io.legado.app.R
 import io.legado.app.help.config.AppConfig
 import io.legado.app.help.glide.ImageLoader
 import io.legado.app.help.glide.OkHttpModelLoader
@@ -26,6 +27,8 @@ import io.legado.app.lib.theme.accentColor
 import io.legado.app.model.BookCover
 import io.legado.app.utils.textHeight
 import io.legado.app.utils.toStringArray
+import io.legado.app.utils.getCompatColor
+import io.legado.app.utils.dpToPx
 
 /**
  * 封面
@@ -36,6 +39,7 @@ class CoverImageView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : AppCompatImageView(context, attrs) {
     private var filletPath = Path()
+    private val modernCover = ModernBookCoverDrawable()
     private var viewWidth: Float = 0f
     private var viewHeight: Float = 0f
     private var defaultCover = true
@@ -86,19 +90,9 @@ class CoverImageView @JvmOverloads constructor(
         viewWidth = width.toFloat()
         viewHeight = height.toFloat()
         filletPath.reset()
-        if (width > 10 && viewHeight > 10) {
-            filletPath.apply {
-                moveTo(10f, 0f)
-                lineTo(viewWidth - 10, 0f)
-                quadTo(viewWidth, 0f, viewWidth, 10f)
-                lineTo(viewWidth, viewHeight - 10)
-                quadTo(viewWidth, viewHeight, viewWidth - 10, viewHeight)
-                lineTo(10f, viewHeight)
-                quadTo(0f, viewHeight, 0f, viewHeight - 10)
-                lineTo(0f, 10f)
-                quadTo(0f, 0f, 10f, 0f)
-                close()
-            }
+        if (width > 0 && height > 0) {
+            val radius = 8f.dpToPx().coerceAtMost(minOf(viewWidth, viewHeight) / 2f)
+            filletPath.addRoundRect(0f, 0f, viewWidth, viewHeight, radius, radius, Path.Direction.CW)
         }
     }
 
@@ -106,7 +100,13 @@ class CoverImageView @JvmOverloads constructor(
         if (!filletPath.isEmpty) {
             canvas.clipPath(filletPath)
         }
-        super.onDraw(canvas)
+        if (!isInEditMode && defaultCover && BookCover.usesModernDefault) {
+            modernCover.setBounds(0, 0, width, height)
+            modernCover.bind(name, AppConfig.isNightTheme, AppConfig.isEInkMode)
+            modernCover.draw(canvas)
+        } else {
+            super.onDraw(canvas)
+        }
         if (defaultCover && !isInEditMode) {
             drawNameAuthor(canvas)
         }
@@ -120,10 +120,12 @@ class CoverImageView @JvmOverloads constructor(
             namePaint.textSize = viewWidth / 6
             namePaint.strokeWidth = namePaint.textSize / 5
             name.forEachIndexed { index, char ->
-                namePaint.color = Color.WHITE
-                namePaint.style = Paint.Style.STROKE
-                canvas.drawText(char, startX, startY, namePaint)
-                namePaint.color = context.accentColor
+                if (!BookCover.usesModernDefault) {
+                    namePaint.color = Color.WHITE
+                    namePaint.style = Paint.Style.STROKE
+                    canvas.drawText(char, startX, startY, namePaint)
+                }
+                namePaint.color = if (BookCover.usesModernDefault) context.getCompatColor(R.color.primaryText) else context.accentColor
                 namePaint.style = Paint.Style.FILL
                 canvas.drawText(char, startX, startY, namePaint)
                 startY += namePaint.textHeight
@@ -142,10 +144,12 @@ class CoverImageView @JvmOverloads constructor(
             startY = viewHeight * 0.95f - author.size * authorPaint.textHeight
             startY = maxOf(startY, viewHeight * 0.3f)
             author.forEach {
-                authorPaint.color = Color.WHITE
-                authorPaint.style = Paint.Style.STROKE
-                canvas.drawText(it, startX, startY, authorPaint)
-                authorPaint.color = context.accentColor
+                if (!BookCover.usesModernDefault) {
+                    authorPaint.color = Color.WHITE
+                    authorPaint.style = Paint.Style.STROKE
+                    canvas.drawText(it, startX, startY, authorPaint)
+                }
+                authorPaint.color = if (BookCover.usesModernDefault) context.getCompatColor(R.color.primaryText) else context.accentColor
                 authorPaint.style = Paint.Style.FILL
                 canvas.drawText(it, startX, startY, authorPaint)
                 startY += authorPaint.textHeight

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="glass_effects">Liquid Glass 玻璃效果</string>
+    <string name="glass_effects_summary">Android 13 以上啟用背景折射與色散，Android 12 使用模糊；電子紙和省電模式使用實體材質</string>
+    <string name="glass_strength">玻璃效果強度</string>
+    <string name="glass_strength_summary">增強鏡面深度、邊緣色散與染色濃度</string>
+    <string name="reading_progress_label">閱讀進度</string>
+</resources>

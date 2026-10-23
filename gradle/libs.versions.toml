@@ -75,6 +75,8 @@ firebaseBom = "33.2.0"
 
 [libraries]
 
+blurview = { module = "com.github.Dimezis:BlurView", version = "version-3.2.0" }
+
 activity-activity = { module = "androidx.activity:activity", version.ref = "activity" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }

@@ -14,7 +14,7 @@
         android:contentDescription="@string/img_cover"
         android:scaleType="centerCrop"
         android:scrollbars="none"
-        android:src="@drawable/image_cover_default"
+        android:src="@drawable/image_cover_modern"
         android:transitionName="img_cover"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

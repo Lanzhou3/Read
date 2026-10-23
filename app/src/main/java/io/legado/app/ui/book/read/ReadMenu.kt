@@ -3,6 +3,7 @@ package io.legado.app.ui.book.read
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.provider.Settings
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
@@ -15,6 +16,7 @@ import android.widget.SeekBar
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import eightbitlab.com.blurview.BlurTarget
 import io.legado.app.R
 import io.legado.app.constant.PreferKey
 import io.legado.app.databinding.ViewReadMenuBinding
@@ -160,6 +162,17 @@ class ReadMenu @JvmOverloads constructor(
         bindEvent()
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        bindGlassBackdrop()
+    }
+
+    private fun bindGlassBackdrop() {
+        val target = rootView.findViewById<BlurTarget>(R.id.reading_content) ?: return
+        binding.titleBar.bindGlassBackdrop(target)
+        binding.readBottomGlass.bindBackdrop(target)
+    }
+
     private fun initView(reset: Boolean = false) = binding.run {
         if (AppConfig.isNightTheme) {
             fabNightTheme.setImageResource(R.drawable.ic_daytime)
@@ -191,8 +204,10 @@ class ReadMenu @JvmOverloads constructor(
             titleBar.setBackgroundResource(R.drawable.bg_eink_border_bottom)
             llBottomBg.setBackgroundResource(R.drawable.bg_eink_border_top)
         } else {
-            llBottomBg.setBackgroundColor(bgColor)
+            llBottomBg.setBackgroundColor(Color.TRANSPARENT)
         }
+        readBottomGlass.setSurfaceColor(bgColor)
+        bindGlassBackdrop()
         fabSearch.backgroundTintList = bottomBackgroundList
         fabSearch.setColorFilter(textColor)
         fabAutoPage.backgroundTintList = bottomBackgroundList
@@ -286,12 +301,16 @@ class ReadMenu @JvmOverloads constructor(
         }
     }
 
+    private fun animationsEnabled(): Boolean = !AppConfig.isEInkMode && Settings.Global.getFloat(
+        context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f
+    ) > 0f
+
     fun runMenuIn(anim: Boolean = !AppConfig.isEInkMode) {
         callBack.onMenuShow()
         this.visible()
         binding.titleBar.visible()
         binding.bottomMenu.visible()
-        if (anim) {
+        if (anim && animationsEnabled()) {
             binding.titleBar.startAnimation(menuTopIn)
             binding.bottomMenu.startAnimation(menuBottomIn)
         } else {
@@ -307,7 +326,7 @@ class ReadMenu @JvmOverloads constructor(
         callBack.onMenuHide()
         this.onMenuOutEnd = onMenuOutEnd
         if (this.isVisible) {
-            if (anim) {
+            if (anim && animationsEnabled()) {
                 binding.titleBar.startAnimation(menuTopOut)
                 binding.bottomMenu.startAnimation(menuBottomOut)
             } else {

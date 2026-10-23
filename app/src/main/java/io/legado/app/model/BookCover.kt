@@ -2,6 +2,7 @@ package io.legado.app.model
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -51,6 +52,8 @@ object BookCover {
         private set
     var drawBookAuthor = true
         private set
+    var usesModernDefault = true
+        private set
     lateinit var defaultDrawable: Drawable
         private set
 
@@ -74,13 +77,21 @@ object BookCover {
         }
         val key = if (isNightTheme) PreferKey.defaultCoverDark else PreferKey.defaultCover
         val path = appCtx.getPrefString(key)
+        // The application context can still have the system mode when the app overrides it.
+        val configuration = Configuration(appCtx.resources.configuration).apply {
+            uiMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or
+                if (isNightTheme) Configuration.UI_MODE_NIGHT_YES else Configuration.UI_MODE_NIGHT_NO
+        }
+        val defaultResources = appCtx.createConfigurationContext(configuration).resources
+        usesModernDefault = path.isNullOrBlank()
         if (path.isNullOrBlank()) {
-            defaultDrawable = appCtx.resources.getDrawable(R.drawable.image_cover_default, null)
+            defaultDrawable = defaultResources.getDrawable(R.drawable.image_cover_modern, null)
             return
         }
-        defaultDrawable = kotlin.runCatching {
-            BitmapDrawable(appCtx.resources, BitmapUtils.decodeBitmap(path, 600, 900))
-        }.getOrDefault(appCtx.resources.getDrawable(R.drawable.image_cover_default, null))
+        val bitmap = kotlin.runCatching { BitmapUtils.decodeBitmap(path, 600, 900) }.getOrNull()
+        usesModernDefault = bitmap == null
+        defaultDrawable = bitmap?.let { BitmapDrawable(appCtx.resources, it) }
+            ?: defaultResources.getDrawable(R.drawable.image_cover_modern, null)
     }
 
     /**
